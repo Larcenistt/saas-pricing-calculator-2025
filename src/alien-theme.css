@@ -1,0 +1,295 @@
+/* 90s Alien Theme Styles */
+
+:root {
+  --alien-black: #000000;
+  --alien-green: #00FF41;
+  --alien-purple: #9D00FF;
+  --alien-silver: #C0C0C0;
+  --alien-red: #FF0040;
+  --alien-blue: #00D4FF;
+  --alien-yellow: #FFD700;
+}
+
+/* Animated Starfield Background */
+@keyframes move-stars {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
+}
+
+.starfield {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.stars {
+  background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Zz4KICAgIDxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CiAgICA8Y2lyY2xlIGN4PSI4MCIgY3k9IjQwIiByPSIxIiBmaWxsPSJ3aGl0ZSIvPgogICAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iODAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CiAgICA8Y2lyY2xlIGN4PSIxNjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0id2hpdGUiLz4KICAgIDxjaXJjbGUgY3g9IjQwIiBjeT0iMTIwIiByPSIxIiBmaWxsPSJ3aGl0ZSIvPgogICAgPGNpcmNsZSBjeD0iMTgwIiBjeT0iMTQwIiByPSIxIiBmaWxsPSJ3aGl0ZSIvPgogIDwvZz4KPC9zdmc+') repeat;
+  position: absolute;
+  top: -2000px;
+  left: 0;
+  width: 100%;
+  height: 4000px;
+  animation: move-stars 60s linear infinite;
+}
+
+/* Glowing Text Effects */
+@keyframes text-glow {
+  0%, 100% { text-shadow: 0 0 10px var(--alien-green), 0 0 20px var(--alien-green), 0 0 30px var(--alien-green); }
+  50% { text-shadow: 0 0 20px var(--alien-green), 0 0 30px var(--alien-green), 0 0 40px var(--alien-green); }
+}
+
+.alien-title {
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  animation: text-glow 2s ease-in-out infinite;
+  background: linear-gradient(45deg, var(--alien-green), var(--alien-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Holographic Button */
+@keyframes holographic {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.alien-button {
+  position: relative;
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, var(--alien-purple), var(--alien-green), var(--alien-blue), var(--alien-purple));
+  background-size: 300% 300%;
+  animation: holographic 3s ease infinite;
+  border: 2px solid rgba(0, 255, 65, 0.5);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.alien-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--alien-green), transparent, var(--alien-purple));
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.alien-button:hover::before {
+  opacity: 1;
+}
+
+.alien-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 255, 65, 0.5);
+}
+
+/* Scanline Effect */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.scanline-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+}
+
+.scanline-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, 
+    rgba(0, 255, 65, 0.1) 0%,
+    transparent 50%,
+    transparent 100%
+  );
+  animation: scanline 8s linear infinite;
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch 0.5s infinite;
+  color: var(--alien-green);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.glitch::after {
+  animation: glitch 0.5s infinite reverse;
+  color: var(--alien-purple);
+  z-index: -2;
+  opacity: 0.8;
+}
+
+/* Neon Card */
+.alien-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--alien-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.5),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.alien-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    var(--alien-green),
+    transparent 30deg
+  );
+  animation: rotate 4s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+/* Typing Effect */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--alien-green);
+  animation: 
+    typing 3s steps(40, end),
+    blink 0.75s step-end infinite;
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Loading Bar */
+@keyframes loading {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.alien-loading {
+  height: 4px;
+  background: var(--alien-green);
+  animation: loading 2s ease-in-out;
+  box-shadow: 0 0 10px var(--alien-green);
+}
+
+/* Countdown Timer */
+.countdown-timer {
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem;
+  color: var(--alien-red);
+  text-shadow: 0 0 10px var(--alien-red);
+  letter-spacing: 0.2em;
+}
+
+/* Classified Stamp */
+.classified-stamp {
+  position: absolute;
+  top: 20px;
+  right: -50px;
+  background: var(--alien-red);
+  color: white;
+  padding: 0.5rem 3rem;
+  transform: rotate(15deg);
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  box-shadow: 0 0 20px rgba(255, 0, 64, 0.5);
+  border: 2px dashed white;
+}

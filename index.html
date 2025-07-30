@@ -2,10 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SaaS Pricing Calculator - Optimize Your Pricing in 5 Minutes</title>
-    <meta name="description" content="Stop guessing your SaaS pricing. Get data-driven recommendations in 5 minutes for $99. One-time purchase, lifetime access." />
+    <meta name="description" content="Stop leaving money on the table. Get data-driven pricing recommendations that increase revenue by 20-80%. One-time purchase, lifetime access." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://saas-pricing-calculator-2025.vercel.app/" />
+    <meta property="og:title" content="SaaS Pricing Calculator - Optimize Your Pricing in 5 Minutes" />
+    <meta property="og:description" content="Stop leaving money on the table. Get data-driven pricing recommendations that increase revenue by 20-80%." />
+    <meta property="og:image" content="https://saas-pricing-calculator-2025.vercel.app/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://saas-pricing-calculator-2025.vercel.app/" />
+    <meta property="twitter:title" content="SaaS Pricing Calculator - Optimize Your Pricing" />
+    <meta property="twitter:description" content="Stop leaving money on the table. Get data-driven pricing recommendations that increase revenue by 20-80%." />
+    <meta property="twitter:image" content="https://saas-pricing-calculator-2025.vercel.app/og-image.png" />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Crisp Chat -->
+    <script type="text/javascript">
+      window.$crisp=[];window.CRISP_WEBSITE_ID="YOUR-WEBSITE-ID";(function(){
+        d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";
+        s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+    
+    <!-- Stripe Buy Button -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   </head>
   <body>
     <div id="root"></div>

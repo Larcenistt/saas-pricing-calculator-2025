@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Flow Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #fff;
+        }
+        .test-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status.pass { background: #10b981; color: white; }
+        .status.fail { background: #ef4444; color: white; }
+        .status.warning { background: #f59e0b; color: white; }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover { background: #059669; }
+        pre {
+            background: #000;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 SaaS Pricing Calculator - Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>1. Page Load Tests</h2>
+        <button onclick="testPageLoads()">Run Page Tests</button>
+        <div id="page-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Payment Flow Test</h2>
+        <button onclick="testPaymentLink()">Test Payment Link</button>
+        <button onclick="simulatePurchase()">Simulate Purchase</button>
+        <div id="payment-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. LocalStorage Tests</h2>
+        <button onclick="checkPurchaseStatus()">Check Purchase Status</button>
+        <button onclick="clearPurchase()">Clear Purchase Data</button>
+        <div id="storage-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Quick Actions</h2>
+        <button onclick="goToLanding()">Go to Landing Page</button>
+        <button onclick="goToSuccess()">Go to Success Page</button>
+        <button onclick="goToCalculator()">Go to Calculator</button>
+        <button onclick="goToStripe()">Go to Payment</button>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Console Output</h2>
+        <pre id="console-output">Test results will appear here...</pre>
+    </div>
+
+    <script>
+        function log(message, status = 'info') {
+            const output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            const statusEmoji = {
+                'pass': '✅',
+                'fail': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️'
+            };
+            output.innerHTML += `${timestamp} ${statusEmoji[status]} ${message}\n`;
+        }
+
+        async function testPageLoads() {
+            const results = document.getElementById('page-results');
+            results.innerHTML = '<p>Testing pages...</p>';
+            
+            const pages = [
+                { url: '/', name: 'Landing Page' },
+                { url: '/success', name: 'Success Page' },
+                { url: '/calculator', name: 'Calculator Page' },
+                { url: '/privacy', name: 'Privacy Policy' },
+                { url: '/terms', name: 'Terms of Service' }
+            ];
+
+            let html = '<ul>';
+            for (const page of pages) {
+                try {
+                    const response = await fetch(page.url);
+                    const status = response.ok ? 'pass' : 'fail';
+                    html += `<li>${page.name}: <span class="status ${status}">${response.status}</span></li>`;
+                    log(`${page.name} returned ${response.status}`, status);
+                } catch (error) {
+                    html += `<li>${page.name}: <span class="status fail">Error</span></li>`;
+                    log(`${page.name} failed: ${error.message}`, 'fail');
+                }
+            }
+            html += '</ul>';
+            results.innerHTML = html;
+        }
+
+        function testPaymentLink() {
+            const paymentUrl = 'https://buy.stripe.com/6oUcN523G11AaJ41aCgYU01';
+            log('Opening payment link in new tab...', 'info');
+            log('Use test card: 4242 4242 4242 4242', 'info');
+            window.open(paymentUrl, '_blank');
+            
+            const results = document.getElementById('payment-results');
+            results.innerHTML = `
+                <p><strong>Test Card Details:</strong></p>
+                <ul>
+                    <li>Number: 4242 4242 4242 4242</li>
+                    <li>Expiry: 12/34</li>
+                    <li>CVC: 123</li>
+                    <li>ZIP: 12345</li>
+                </ul>
+            `;
+        }
+
+        function simulatePurchase() {
+            localStorage.setItem('purchased', 'true');
+            localStorage.setItem('purchaseDate', new Date().toISOString());
+            localStorage.setItem('stripeSessionId', 'test_' + Date.now());
+            
+            log('Purchase simulated successfully', 'pass');
+            log('You can now access the calculator', 'info');
+            
+            const results = document.getElementById('payment-results');
+            results.innerHTML = '<p class="status pass">Purchase simulated! You can now access the calculator.</p>';
+        }
+
+        function checkPurchaseStatus() {
+            const purchased = localStorage.getItem('purchased');
+            const purchaseDate = localStorage.getItem('purchaseDate');
+            const sessionId = localStorage.getItem('stripeSessionId');
+            
+            const results = document.getElementById('storage-results');
+            let html = '<h3>Purchase Status:</h3><ul>';
+            
+            if (purchased === 'true') {
+                html += '<li><span class="status pass">Purchased</span></li>';
+                log('Purchase status: Active', 'pass');
+            } else {
+                html += '<li><span class="status fail">Not Purchased</span></li>';
+                log('Purchase status: Not found', 'fail');
+            }
+            
+            if (purchaseDate) {
+                const date = new Date(purchaseDate).toLocaleDateString();
+                html += `<li>Purchase Date: ${date}</li>`;
+                log(`Purchase date: ${date}`, 'info');
+            }
+            
+            if (sessionId) {
+                html += `<li>Session ID: ${sessionId}</li>`;
+                log(`Session ID: ${sessionId}`, 'info');
+            }
+            
+            html += '</ul>';
+            results.innerHTML = html;
+        }
+
+        function clearPurchase() {
+            localStorage.removeItem('purchased');
+            localStorage.removeItem('purchaseDate');
+            localStorage.removeItem('stripeSessionId');
+            
+            log('Purchase data cleared', 'warning');
+            
+            const results = document.getElementById('storage-results');
+            results.innerHTML = '<p class="status warning">Purchase data cleared. You will need to purchase again or simulate.</p>';
+        }
+
+        function goToLanding() {
+            window.location.href = '/';
+        }
+
+        function goToSuccess() {
+            window.location.href = '/success';
+        }
+
+        function goToCalculator() {
+            window.location.href = '/calculator';
+        }
+
+        function goToStripe() {
+            window.location.href = 'https://buy.stripe.com/6oUcN523G11AaJ41aCgYU01';
+        }
+
+        // Run initial check
+        window.onload = function() {
+            log('Test suite loaded', 'pass');
+            log('Site URL: ' + window.location.origin, 'info');
+            checkPurchaseStatus();
+        };
+    </script>
+</body>
+</html>

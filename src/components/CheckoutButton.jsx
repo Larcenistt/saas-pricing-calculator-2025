@@ -12,7 +12,10 @@ export default function CheckoutButton({ text = "Get Instant Access - $99", clas
   return (
     <button
       onClick={handleClick}
-      className={`bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors ${className}`}
+      className={className.includes('premium-button') || className.includes('alien-button')
+        ? className 
+        : `bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors ${className}`
+      }
     >
       {text}
     </button>
