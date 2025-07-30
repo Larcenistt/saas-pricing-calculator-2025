@@ -1,47 +1,62 @@
 # 🔄 Setting Up Automatic Redirect After Payment
 
+## ✅ What I've Done
+
+1. **Added success-url attribute** to your Buy Button code:
+   ```html
+   success-url="https://saas-pricing-calculator-2025.vercel.app/success"
+   ```
+
+2. **Created a test page** at `/test.html` to verify everything is working
+
 ## Current Flow vs Desired Flow
 
-### Current Flow ❌
-1. Customer clicks "Get Instant Access"
-2. Goes to Stripe payment page
+### Current Flow (May Need Dashboard Config)
+1. Customer clicks Buy Button
+2. Stripe checkout opens in modal
 3. Completes payment
-4. Stays on Stripe success page
-5. Has to manually return to site
-6. Clicks "Access Calculator"
+4. Modal closes (may not redirect)
+5. Has to click "Access Calculator"
 
 ### Desired Flow ✅
-1. Customer clicks "Get Instant Access"
-2. Goes to Stripe payment page
+1. Customer clicks Buy Button
+2. Stripe checkout opens in modal
 3. Completes payment
 4. **Automatically redirects to your success page**
 5. Calculator is immediately available
 
 ## Setup Instructions
 
-### Step 1: Configure Stripe Payment Link
+### Step 1: Test Current Setup
+
+Visit: https://saas-pricing-calculator-2025.vercel.app/test.html
+- Check all status indicators
+- Test the buy button
+- See if redirect works automatically
+
+### Step 2: Configure Stripe Buy Button (If Redirect Not Working)
 
 1. **Log into Stripe Dashboard**
    - Go to: https://dashboard.stripe.com
 
-2. **Navigate to Payment Links**
-   - Click "Payment Links" in the sidebar
-   - Or go to: https://dashboard.stripe.com/payment-links
+2. **Navigate to Buy Buttons**
+   - Click "Payment Links" or "Buy Buttons" in the sidebar
+   - Or search for your button
 
-3. **Find Your Payment Link**
-   - Look for the link that ends with: `1aCgYU01`
+3. **Find Your Buy Button**
+   - Look for button ID: `buy_btn_1RqOC7I6kujeAM5FZbqTtxFL`
    - It should show "$99.00" as the price
 
-4. **Edit the Payment Link**
-   - Click on the payment link
-   - Click "Edit" button (or ⚙️ icon)
+4. **Edit the Buy Button**
+   - Click on the button
+   - Click "Edit" or settings icon
 
-5. **Configure Success URL**
-   - Scroll to "After payment" section
-   - Toggle ON "Don't show confirmation page"
-   - In "Success URL" field, enter:
+5. **Configure Success Behavior**
+   - Look for "After payment" or "Success behavior" section
+   - Enable "Redirect customers to a specific page"
+   - Enter success URL:
    ```
-   https://saas-pricing-calculator-2025.vercel.app/success?session_id={CHECKOUT_SESSION_ID}
+   https://saas-pricing-calculator-2025.vercel.app/success
    ```
 
 6. **Save Changes**
