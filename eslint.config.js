@@ -5,9 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'node_modules']),
   {
     files: ['**/*.{js,jsx}'],
+    ignores: ['monitor-website.js', 'setup-analytics.js'],
     extends: [
       js.configs.recommended,
       reactHooks.configs['recommended-latest'],
@@ -24,6 +25,12 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+  {
+    files: ['monitor-website.js', 'setup-analytics.js'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 ])

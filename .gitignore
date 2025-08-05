@@ -29,3 +29,21 @@ dist-ssr
 .env.production
 
 .vercel
+
+# Documentation (keep only essential docs)
+*.md
+!README.md
+!CLAUDE.md
+!TODO.md
+!PRODUCT_ROADMAP.md
+
+# Test files
+test*.html
+test*.js
+*.ps1
+
+# Temporary files
+*-COMPLETE.md
+*-FINAL.md
+*-SUMMARY.md
+*_SETUP_NOW.md

@@ -16,7 +16,7 @@ It's $99 (one-time payment, no subscription) and gives you:
 - Optimized 3-tier pricing structure
 - Professional PDF export for your team
 
-Here's the link: https://saas-pricing-calculator-2025.vercel.app
+Here's the link: https://predictionnexus.com
 
 If you know any SaaS founders who might find this useful, I'd really appreciate you sharing it with them. And if you have any feedback, I'd love to hear it!
 
@@ -46,7 +46,7 @@ Here's what you get:
 ✓ Professional pricing table PDF
 ✓ One-time purchase ($99) - no subscriptions
 
-Check it out: https://saas-pricing-calculator-2025.vercel.app
+Check it out: https://predictionnexus.com
 
 No demos, no sales calls. Just buy it and use it instantly.
 
@@ -76,7 +76,7 @@ I know you're busy, so I'll keep this short:
 
 One founder used it last week and found they were underpriced by $20/month. With 500 customers, that's $120k/year left on the table.
 
-Here's the link again: https://saas-pricing-calculator-2025.vercel.app
+Here's the link again: https://predictionnexus.com
 
 If it's not relevant, no worries! Just thought it might help.
 
@@ -105,7 +105,7 @@ Thanks for purchasing the SaaS Pricing Calculator! Here's how to get maximum val
 - Use the PDF export in your board meetings
 
 **Your Access:**
-You have lifetime access at: https://saas-pricing-calculator-2025.vercel.app/calculator
+You have lifetime access at: https://predictionnexus.com/calculator
 (Bookmark this page)
 
 **Need Help?**
@@ -141,7 +141,7 @@ Would you mind sharing it with 2-3 other SaaS founders who might benefit?
 
 Here's a easy copy/paste message:
 ---
-"Just used this pricing calculator and found we were underpriced by 30%. Takes 5 minutes and costs $99 one-time: https://saas-pricing-calculator-2025.vercel.app"
+"Just used this pricing calculator and found we were underpriced by 30%. Takes 5 minutes and costs $99 one-time: https://predictionnexus.com"
 ---
 
 As a thank you, I'll send you my "SaaS Pricing Psychology" guide that normally sells for $47.
@@ -174,7 +174,7 @@ What you get:
 → Professional PDF export
 → One-time purchase (no subscriptions!)
 
-Get it here: https://saas-pricing-calculator-2025.vercel.app
+Get it here: https://predictionnexus.com
 
 **Launch Special:** First 50 customers get 50% off with code LAUNCH50
 

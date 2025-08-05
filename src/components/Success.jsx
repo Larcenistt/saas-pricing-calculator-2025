@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Calculator from './Calculator';
+import { trackPurchase } from '../utils/analytics';
 
 export default function Success() {
   const [showConfetti, setShowConfetti] = useState(true);
@@ -17,6 +18,10 @@ export default function Success() {
       setSessionId(session);
       localStorage.setItem('stripeSessionId', session);
     }
+    
+    // Track the successful purchase in Google Analytics
+    const transactionId = session || Date.now().toString();
+    trackPurchase(transactionId);
     
     // Hide confetti after 3 seconds
     setTimeout(() => setShowConfetti(false), 3000);

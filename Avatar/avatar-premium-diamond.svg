@@ -1,0 +1,87 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definitions -->
+  <defs>
+    <!-- Radial gradient for luxury feel -->
+    <radialGradient id="luxuryGrad" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#ffed4e;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c92a2a;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Diamond gradient -->
+    <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f5ff;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#ff00ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffff00;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff1744;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Sparkle filter -->
+    <filter id="sparkle">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Black background -->
+  <rect width="400" height="400" fill="#000000"/>
+  
+  <!-- Outer glow ring -->
+  <circle cx="200" cy="200" r="190" fill="none" stroke="url(#luxuryGrad)" stroke-width="4" filter="url(#glow)"/>
+  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#luxuryGrad)" stroke-width="2" opacity="0.5"/>
+  <circle cx="200" cy="200" r="170" fill="none" stroke="url(#luxuryGrad)" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Diamond shape in center -->
+  <g transform="translate(200, 200)">
+    <!-- Main diamond -->
+    <path d="M 0 -80 L 60 0 L 0 80 L -60 0 Z" fill="url(#diamondGrad)" filter="url(#sparkle)">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Inner diamond facets -->
+    <path d="M 0 -80 L 30 -30 L 0 0 Z" fill="#ffffff" opacity="0.3"/>
+    <path d="M 0 -80 L -30 -30 L 0 0 Z" fill="#ffffff" opacity="0.2"/>
+    <path d="M 0 0 L 30 -30 L 60 0 Z" fill="#ffff00" opacity="0.3"/>
+    <path d="M 0 0 L -30 -30 L -60 0 Z" fill="#ff00ff" opacity="0.3"/>
+  </g>
+  
+  <!-- Dollar sign with glow -->
+  <text x="200" y="210" font-family="Arial Black, sans-serif" font-size="60" font-weight="900" 
+        fill="#ffffff" text-anchor="middle" filter="url(#glow)">$</text>
+  <text x="200" y="210" font-family="Arial Black, sans-serif" font-size="60" font-weight="900" 
+        fill="#ffd700" text-anchor="middle">$</text>
+  
+  <!-- Sparkles around diamond -->
+  <g>
+    <circle cx="120" cy="120" r="3" fill="#ffffff" filter="url(#sparkle)">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="280" cy="120" r="3" fill="#ffd700" filter="url(#sparkle)">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="120" cy="280" r="3" fill="#00f5ff" filter="url(#sparkle)">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="280" cy="280" r="3" fill="#ff00ff" filter="url(#sparkle)">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Premium text -->
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="28" font-weight="bold" 
+        fill="#ffd700" text-anchor="middle" letter-spacing="8">PREMIUM</text>
+</svg>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { trackBuyButtonClick } from '../utils/analytics';
 
 export default function BuyButtonWrapper() {
   const [isButtonLoaded, setIsButtonLoaded] = useState(false);
@@ -21,6 +22,17 @@ export default function BuyButtonWrapper() {
     return () => clearInterval(checkStripeLoaded);
   }, []);
 
+  useEffect(() => {
+    // Add click tracking to Stripe button when it loads
+    if (isButtonLoaded) {
+      const stripeButton = document.querySelector('stripe-buy-button');
+      if (stripeButton) {
+        stripeButton.addEventListener('click', trackBuyButtonClick);
+        return () => stripeButton.removeEventListener('click', trackBuyButtonClick);
+      }
+    }
+  }, [isButtonLoaded]);
+
   return (
     <div className="w-full relative min-h-[56px]">
       {/* Loading skeleton */}
@@ -37,7 +49,7 @@ export default function BuyButtonWrapper() {
         <stripe-buy-button
           buy-button-id="buy_btn_1RqOC7I6kujeAM5FZbqTtxFL"
           publishable-key="pk_live_51RqLWCI6kujeAM5FQSJbNLxHrxgCmrLqTe9187pxEGVbxxRXIeTuDMd7mv6cwAV68ufyvcBgHHRFC8dx0XT6Mxxn003tmk9NAN"
-          success-url="https://saas-pricing-calculator-2025.vercel.app/success"
+          success-url="https://predictionnexus.com/success"
         />
       </div>
       

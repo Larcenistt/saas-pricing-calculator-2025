@@ -18,7 +18,7 @@ One-time purchase: $99 (no subscriptions)
 
 The same insights consultants charge $500+ for, delivered in 5 minutes.
 
-Check it out: https://saas-pricing-calculator-2025.vercel.app
+Check it out: https://predictionnexus.com
 
 Would love your feedback!
 
@@ -41,7 +41,7 @@ Result? Zero churn. 70% more revenue.
 
 Most SaaS companies are underpriced by 30-40%.
 
-That's why I built a tool to fix this: https://saas-pricing-calculator-2025.vercel.app
+That's why I built a tool to fix this: https://predictionnexus.com
 
 What % are you leaving on the table?
 
@@ -82,7 +82,7 @@ $99 one-time (not a subscription)
 
 5 minutes to 40% more revenue?
 
-Link: https://saas-pricing-calculator-2025.vercel.app
+Link: https://predictionnexus.com
 
 ---
 
@@ -98,7 +98,7 @@ The time: 5 minutes vs 2 weeks
 
 Math seems pretty clear 🤷‍♂️
 
-https://saas-pricing-calculator-2025.vercel.app
+https://predictionnexus.com
 
 ---
 
@@ -124,7 +124,7 @@ It's $99 (one-time) and takes 5 minutes.
 
 Not trying to spam - genuinely want feedback from this community. Happy to give a few free access codes to regular contributors who'll give honest feedback.
 
-Check it out: https://saas-pricing-calculator-2025.vercel.app
+Check it out: https://predictionnexus.com
 
 What pricing challenges are you facing?
 

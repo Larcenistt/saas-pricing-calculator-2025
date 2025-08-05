@@ -12,7 +12,7 @@ Thank you for purchasing the SaaS Pricing Calculator!
 Your payment of $99 has been successfully processed.
 
 **Access Your Calculator:**
-https://saas-pricing-calculator-2025.vercel.app/calculator
+https://predictionnexus.com/calculator
 
 Please bookmark this link for future access. You have lifetime access to the calculator.
 
@@ -47,7 +47,7 @@ To help you get started, here's a quick guide:
 - Monthly churn rate (optional)
 
 **Step 2: Run Your Analysis**
-Access your calculator: https://saas-pricing-calculator-2025.vercel.app/calculator
+Access your calculator: https://predictionnexus.com/calculator
 
 **Step 3: Implement Your Results**
 - Review the recommended pricing tiers
@@ -120,7 +120,7 @@ Founder, Prediction Nexus
 support@predictionnexus.com
 
 SaaS Pricing Calculator - Find your optimal pricing in 5 minutes
-https://saas-pricing-calculator-2025.vercel.app
+https://predictionnexus.com
 ```
 
 ---
@@ -137,7 +137,7 @@ Thanks for contacting Prediction Nexus support!
 We've received your email and will respond within 24 hours (usually much faster).
 
 In the meantime:
-- Calculator Access: https://saas-pricing-calculator-2025.vercel.app/calculator
+- Calculator Access: https://predictionnexus.com/calculator
 - Quick Start Guide: Check your welcome email
 
 For urgent issues, please include "URGENT" in your subject line.
@@ -158,7 +158,7 @@ Prediction Nexus Support
 ## Common Responses:
 
 **"How do I access the calculator?"**
-→ Send link: https://saas-pricing-calculator-2025.vercel.app/calculator
+→ Send link: https://predictionnexus.com/calculator
 
 **"Can I share with my team?"**
 → "Yes! The license covers your entire company. Feel free to share the calculator link with your team."

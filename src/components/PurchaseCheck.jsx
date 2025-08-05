@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Success from './Success';
 import CheckoutButton from './CheckoutButton';
 

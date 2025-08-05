@@ -1,0 +1,150 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gold gradient for trophy -->
+    <linearGradient id="goldTrophy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff3b8;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffb300;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fff3b8;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Confetti colors -->
+    <linearGradient id="confetti1">
+      <stop offset="0%" style="stop-color:#ff1744"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+    <linearGradient id="confetti2">
+      <stop offset="0%" style="stop-color:#00e676"/>
+      <stop offset="100%" style="stop-color:#69f0ae"/>
+    </linearGradient>
+    <linearGradient id="confetti3">
+      <stop offset="0%" style="stop-color:#2979ff"/>
+      <stop offset="100%" style="stop-color:#82b1ff"/>
+    </linearGradient>
+    <linearGradient id="confetti4">
+      <stop offset="0%" style="stop-color:#ffea00"/>
+      <stop offset="100%" style="stop-color:#ffff56"/>
+    </linearGradient>
+    
+    <!-- Star glow -->
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Trophy shine -->
+    <filter id="trophyShine">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.3"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Victory background -->
+  <rect width="400" height="400" fill="#1a0033"/>
+  
+  <!-- Radiating victory lines -->
+  <g transform="translate(200, 200)" opacity="0.3">
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite"/>
+      <path d="M 0 0 L 0 -200" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L 141 -141" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L 200 0" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L 141 141" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L 0 200" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L -141 141" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L -200 0" stroke="#ffd700" stroke-width="2"/>
+      <path d="M 0 0 L -141 -141" stroke="#ffd700" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- Confetti animation -->
+  <g>
+    <!-- Confetti piece 1 -->
+    <rect x="80" y="50" width="20" height="10" fill="url(#confetti1)" transform="rotate(45 90 55)">
+      <animate attributeName="y" values="50;350;50" dur="4s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 90 55;360 90 55" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Confetti piece 2 -->
+    <rect x="150" y="30" width="20" height="10" fill="url(#confetti2)" transform="rotate(30 160 35)">
+      <animate attributeName="y" values="30;330;30" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 160 35;-360 160 35" dur="2.5s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Confetti piece 3 -->
+    <rect x="250" y="60" width="20" height="10" fill="url(#confetti3)" transform="rotate(60 260 65)">
+      <animate attributeName="y" values="60;360;60" dur="4.2s" begin="1s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 260 65;360 260 65" dur="1.8s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Confetti piece 4 -->
+    <rect x="320" y="40" width="20" height="10" fill="url(#confetti4)" transform="rotate(15 330 45)">
+      <animate attributeName="y" values="40;340;40" dur="3.8s" begin="1.5s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 330 45;-360 330 45" dur="2.2s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Trophy -->
+  <g transform="translate(200, 200)">
+    <!-- Trophy cup -->
+    <path d="M -60 -40 C -60 -40, -80 -30, -80 0 C -80 30, -60 40, -40 40 L -30 40 L -20 80 L 20 80 L 30 40 L 40 40 C 60 40, 80 30, 80 0 C 80 -30, 60 -40, 60 -40 Z" 
+          fill="url(#goldTrophy)" filter="url(#trophyShine)"/>
+    
+    <!-- Trophy handles -->
+    <path d="M -60 -30 C -90 -30, -100 -10, -100 0 C -100 10, -90 30, -60 30" 
+          fill="none" stroke="url(#goldTrophy)" stroke-width="8"/>
+    <path d="M 60 -30 C 90 -30, 100 -10, 100 0 C 100 10, 90 30, 60 30" 
+          fill="none" stroke="url(#goldTrophy)" stroke-width="8"/>
+    
+    <!-- Trophy base -->
+    <rect x="-40" y="80" width="80" height="20" fill="url(#goldTrophy)" filter="url(#trophyShine)"/>
+    <rect x="-50" y="100" width="100" height="10" fill="#8b6914" filter="url(#trophyShine)"/>
+    
+    <!-- $$$ on trophy -->
+    <text x="0" y="5" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" 
+          fill="#8b6914" text-anchor="middle">$$$</text>
+  </g>
+  
+  <!-- #1 PRICING banner -->
+  <g transform="translate(200, 70)">
+    <rect x="-80" y="-20" width="160" height="40" fill="#ff1744" rx="5"/>
+    <text x="0" y="8" font-family="Arial Black, sans-serif" font-size="24" font-weight="900" 
+          fill="#ffffff" text-anchor="middle">#1 PRICING</text>
+  </g>
+  
+  <!-- Stars circling -->
+  <g transform="translate(200, 200)">
+    <g filter="url(#starGlow)">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/>
+      <!-- Star 1 -->
+      <path d="M 120 0 L 124 8 L 132 8 L 126 14 L 128 22 L 120 18 L 112 22 L 114 14 L 108 8 L 116 8 Z" fill="#ffd700"/>
+      <!-- Star 2 -->
+      <g transform="rotate(72)">
+        <path d="M 120 0 L 124 8 L 132 8 L 126 14 L 128 22 L 120 18 L 112 22 L 114 14 L 108 8 L 116 8 Z" fill="#ffd700"/>
+      </g>
+      <!-- Star 3 -->
+      <g transform="rotate(144)">
+        <path d="M 120 0 L 124 8 L 132 8 L 126 14 L 128 22 L 120 18 L 112 22 L 114 14 L 108 8 L 116 8 Z" fill="#ffd700"/>
+      </g>
+      <!-- Star 4 -->
+      <g transform="rotate(216)">
+        <path d="M 120 0 L 124 8 L 132 8 L 126 14 L 128 22 L 120 18 L 112 22 L 114 14 L 108 8 L 116 8 Z" fill="#ffd700"/>
+      </g>
+      <!-- Star 5 -->
+      <g transform="rotate(288)">
+        <path d="M 120 0 L 124 8 L 132 8 L 126 14 L 128 22 L 120 18 L 112 22 L 114 14 L 108 8 L 116 8 Z" fill="#ffd700"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- WINNER text -->
+  <text x="200" y="360" font-family="Arial Black, sans-serif" font-size="42" font-weight="900" 
+        fill="#ffd700" text-anchor="middle" letter-spacing="6" filter="url(#starGlow)">WINNER</text>
+</svg>

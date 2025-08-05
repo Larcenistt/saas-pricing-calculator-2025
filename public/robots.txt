@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://saas-pricing-calculator-2025.vercel.app/sitemap.xml

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function StripeBuyButton({ text = "Get Instant Access", className = "" }) {
+export default function StripeBuyButton({ className = "" }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
