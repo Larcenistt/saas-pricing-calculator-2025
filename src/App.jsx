@@ -3,9 +3,9 @@ import { Toaster } from 'react-hot-toast'
 import { useState, useEffect, lazy, Suspense } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingScreen from './components/LoadingScreen'
-import Navigation from './components/Navigation-Futuristic'
-import PurchaseNotifications from './components/PurchaseNotifications'
-import ExitIntentPopup from './components/ExitIntentPopup'
+import Navigation from './components/Navigation-Modern'
+import PurchaseNotifications from './components/PurchaseNotifications-Professional'
+import ExitIntentPopup from './components/ExitIntentPopup-Professional'
 import EmailCapturePopup from './components/EmailCapturePopup'
 import LiveChat from './components/LiveChat'
 import NetworkStatus from './components/NetworkStatus'
@@ -22,7 +22,6 @@ const ResourcesPage = lazy(() => import('./pages/ResourcesPage'))
 const ReferralPage = lazy(() => import('./pages/ReferralPage'))
 import './App.css'
 import './modern-dark.css'
-import './futuristic-pro.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
