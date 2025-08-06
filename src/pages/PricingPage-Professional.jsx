@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import BuyButtonWrapper from '../components/BuyButtonWrapper';
 
 export default function PricingPage() {

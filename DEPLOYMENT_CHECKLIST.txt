@@ -1,0 +1,51 @@
+VERCEL DEPLOYMENT CHECKLIST
+============================
+
+□ Step 1: Go to https://vercel.com/new (OPENED IN BROWSER)
+
+□ Step 2: Click "Import Git Repository"
+
+□ Step 3: Search for "saas-pricing-calculator-2025"
+
+□ Step 4: Click "Import" button next to your repo
+
+□ Step 5: Configure Project Settings:
+   □ Framework Preset: Select "Vite"
+   □ Build Command: npm run build
+   □ Output Directory: dist
+   □ Install Command: npm install (default)
+
+□ Step 6: Add Environment Variables:
+   Click "Add" for each:
+   □ VITE_API_URL = http://localhost:3001/api/v1
+   □ VITE_STRIPE_PUBLISHABLE_KEY = pk_live_51RqLWCI6kujeAM5FQSJbNLxHrxgCmrLqTe9187pxEGVbxxRXIeTuDMd7mv6cwAV68ufyvcBgHHRFC8dx0XT6Mxxn003tmk9NAN
+   □ VITE_GA_TRACKING_ID = G-JMQMDLTNK4
+   □ VITE_ENABLE_REAL_TIME = true
+   □ VITE_ENABLE_SUBSCRIPTIONS = true
+   □ VITE_ENABLE_ANALYTICS = true
+
+□ Step 7: Click "Deploy" button
+
+□ Step 8: Wait for deployment (2-3 minutes)
+
+□ Step 9: After deployment, go to Settings → Domains
+
+□ Step 10: Add domains:
+   □ Add: predictionnexus.com
+   □ Add: www.predictionnexus.com
+
+□ Step 11: Verify the site shows:
+   □ Title: "SaaS Pricing Calculator - Optimize Your Pricing in 5 Minutes"
+   □ NOT: "Vite + React + TS"
+   □ Calculator interface is visible
+   □ Navigation menu works
+
+VERIFICATION:
+✓ Check: https://[your-project].vercel.app
+✓ Check: https://www.predictionnexus.com (after DNS)
+✓ Check: https://predictionnexus.com (after DNS)
+
+If you see the wrong content, check:
+- Build command MUST be: npm run build
+- Output directory MUST be: dist
+- Framework MUST be: Vite

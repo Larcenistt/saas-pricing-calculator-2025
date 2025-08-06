@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import HeroSection from '../components/HeroSection-Professional';
 import FeaturesSection from '../components/FeaturesSection-Professional';
 import TestimonialsSection from '../components/TestimonialsSection-Professional';

@@ -12,12 +12,22 @@ if (document.readyState === 'loading') {
 }
 
 const root = document.getElementById('root');
+console.log('main.jsx: Root element:', root);
+console.log('main.jsx: Document ready state:', document.readyState);
+
 if (root) {
-  createRoot(root).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
+  console.log('main.jsx: Creating React root and rendering App...');
+  try {
+    const reactRoot = createRoot(root);
+    reactRoot.render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+    console.log('main.jsx: App rendered successfully');
+  } catch (error) {
+    console.error('main.jsx: Error rendering App:', error);
+  }
 } else {
-  console.error('Failed to find root element');
+  console.error('main.jsx: Failed to find root element');
 }

@@ -44,6 +44,8 @@ export default function Calculator() {
   const [results, setResults] = useState(null);
   const [activeTab, setActiveTab] = useState('metrics');
   const [currentStep, setCurrentStep] = useState(1);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [calculationProgress, setCalculationProgress] = useState(0);
   
   // Calculate progress based on filled inputs
   const calculateProgress = () => {
@@ -213,7 +215,27 @@ export default function Calculator() {
     }));
   };
 
-  const calculateAdvancedMetrics = () => {
+  const calculateAdvancedMetrics = async () => {
+    setIsCalculating(true);
+    setCalculationProgress(0);
+    
+    // Simulate premium calculation process with progress
+    const progressSteps = [
+      { step: 10, message: 'Parsing your input data...' },
+      { step: 25, message: 'Analyzing competitor pricing...' },
+      { step: 40, message: 'Computing SaaS metrics...' },
+      { step: 60, message: 'Running AI optimization algorithms...' },
+      { step: 80, message: 'Generating insights and recommendations...' },
+      { step: 95, message: 'Finalizing your premium analysis...' },
+      { step: 100, message: 'Complete!' }
+    ];
+    
+    for (const progressStep of progressSteps) {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setCalculationProgress(progressStep.step);
+      toast.loading(progressStep.message, { id: 'calculation-progress' });
+    }
+    
     // Parse inputs
     const current = parseFloat(inputs.currentPrice) || 0;
     const competitor = parseFloat(inputs.competitorPrice) || 0;
@@ -348,7 +370,16 @@ export default function Calculator() {
       priceIncrease: Math.round(((optimalPrice - current) / current) * 100)
     });
 
-    toast.success('Analysis complete! Check out your personalized recommendations.');
+    setIsCalculating(false);
+    setCalculationProgress(0);
+    toast.dismiss('calculation-progress');
+    toast.success('🎉 Premium analysis complete! Your personalized recommendations are ready.', {
+      duration: 5000,
+      style: {
+        background: '#10b981',
+        color: 'white',
+      },
+    });
   };
 
   const generateInsights = (ltvCac, nrr, quickRatio, rule40, current, optimal) => {
@@ -592,18 +623,43 @@ export default function Calculator() {
         </div>
       </div>
 
-      {/* Calculate Button */}
+      {/* Calculate Button with Loading State */}
       <div className="flex justify-center mb-8">
         <Button
           onClick={calculateAdvancedMetrics}
           variant="primary"
           size="lg"
-          icon="🚀"
-          className="shadow-2xl shadow-primary/30"
+          icon={isCalculating ? "⏳" : "🚀"}
+          className="shadow-2xl shadow-primary/30 min-w-[280px]"
+          disabled={isCalculating}
         >
-          Generate AI-Powered Analysis
+          {isCalculating ? (
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+              <span>Analyzing ({calculationProgress}%)</span>
+            </div>
+          ) : (
+            'Generate AI-Powered Analysis'
+          )}
         </Button>
       </div>
+      
+      {/* Premium Progress Bar during calculation */}
+      {isCalculating && (
+        <div className="mb-8 max-w-md mx-auto">
+          <div className="bg-glass-primary rounded-full h-3 overflow-hidden backdrop-blur-lg border border-glass-border">
+            <div 
+              className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out relative"
+              style={{ width: `${calculationProgress}%` }}
+            >
+              <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-secondary mt-2 font-medium">
+            Running premium algorithms on your data...
+          </p>
+        </div>
+      )}
 
       {/* Results Section */}
       {results && (

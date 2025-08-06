@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Diagnostic Tool</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 10px;
+    }
+    .test-section {
+      background: #1a1a1a;
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .test-result {
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 3px solid #666;
+    }
+    .success {
+      border-color: #00ff00;
+      background: rgba(0, 255, 0, 0.1);
+    }
+    .error {
+      border-color: #ff0000;
+      background: rgba(255, 0, 0, 0.1);
+      color: #ff6666;
+    }
+    .info {
+      border-color: #00ffff;
+      background: rgba(0, 255, 255, 0.1);
+      color: #00ffff;
+    }
+    button {
+      background: #00ff00;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #00cc00;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: 2px solid #00ff00;
+      margin-top: 20px;
+    }
+    .log-output {
+      background: #000;
+      padding: 15px;
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 SaaS Calculator Diagnostic Tool</h1>
+    
+    <div class="test-section">
+      <h2>Quick Actions</h2>
+      <button onclick="testMainApp()">Test Main App (Port 5176)</button>
+      <button onclick="testSimpleApp()">Test Simple App</button>
+      <button onclick="clearConsole()">Clear Console</button>
+      <button onclick="checkAllPorts()">Check All Ports</button>
+    </div>
+    
+    <div class="test-section">
+      <h2>Console Output</h2>
+      <div id="console-log" class="log-output"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>Test Results</h2>
+      <div id="test-results"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>App Preview</h2>
+      <iframe id="app-frame" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const logOutput = document.getElementById('console-log');
+    const testResults = document.getElementById('test-results');
+    const appFrame = document.getElementById('app-frame');
+    
+    // Override console methods to capture output
+    const originalLog = console.log;
+    const originalError = console.error;
+    const originalWarn = console.warn;
+    
+    function addLog(type, ...args) {
+      const timestamp = new Date().toLocaleTimeString();
+      const message = args.map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+      ).join(' ');
+      
+      const color = type === 'error' ? '#ff6666' : type === 'warn' ? '#ffaa00' : '#00ff00';
+      logOutput.innerHTML += `<span style="color: ${color}">[${timestamp}] ${type.toUpperCase()}: ${message}</span>\n`;
+      logOutput.scrollTop = logOutput.scrollHeight;
+    }
+    
+    console.log = (...args) => {
+      originalLog(...args);
+      addLog('log', ...args);
+    };
+    
+    console.error = (...args) => {
+      originalError(...args);
+      addLog('error', ...args);
+    };
+    
+    console.warn = (...args) => {
+      originalWarn(...args);
+      addLog('warn', ...args);
+    };
+    
+    function addTestResult(message, status = 'info') {
+      const div = document.createElement('div');
+      div.className = `test-result ${status}`;
+      div.innerHTML = message;
+      testResults.appendChild(div);
+    }
+    
+    function clearConsole() {
+      logOutput.innerHTML = '';
+      testResults.innerHTML = '';
+      console.log('Console cleared');
+    }
+    
+    async function testMainApp() {
+      clearConsole();
+      console.log('Testing main app on port 5176...');
+      
+      try {
+        const response = await fetch('http://localhost:5176/');
+        if (response.ok) {
+          addTestResult('✓ Dev server is running on port 5176', 'success');
+          const text = await response.text();
+          
+          if (text.includes('id="root"')) {
+            addTestResult('✓ Root element found in HTML', 'success');
+          } else {
+            addTestResult('✗ Root element NOT found in HTML', 'error');
+          }
+          
+          if (text.includes('main.jsx')) {
+            addTestResult('✓ main.jsx script tag found', 'success');
+          } else {
+            addTestResult('✗ main.jsx script tag NOT found', 'error');
+          }
+          
+          // Load app in iframe
+          appFrame.src = 'http://localhost:5176/';
+          addTestResult('Loading app in iframe...', 'info');
+          
+          // Check if React is loaded
+          setTimeout(() => {
+            try {
+              const frameWindow = appFrame.contentWindow;
+              if (frameWindow.React) {
+                addTestResult('✓ React is loaded in app', 'success');
+              } else {
+                addTestResult('⚠ React not detected (may be bundled)', 'info');
+              }
+            } catch (e) {
+              addTestResult('⚠ Cannot access iframe content (CORS)', 'info');
+            }
+          }, 2000);
+          
+        } else {
+          addTestResult(`✗ Server responded with status: ${response.status}`, 'error');
+        }
+      } catch (error) {
+        addTestResult(`✗ Failed to connect to dev server: ${error.message}`, 'error');
+        addTestResult('Make sure dev server is running: npm run dev', 'info');
+      }
+    }
+    
+    async function testSimpleApp() {
+      clearConsole();
+      console.log('Loading simple test app...');
+      appFrame.src = 'http://localhost:5176/?test=simple';
+      addTestResult('Loading simple test version...', 'info');
+    }
+    
+    async function checkAllPorts() {
+      clearConsole();
+      console.log('Checking common dev server ports...');
+      
+      const ports = [3000, 3001, 5173, 5174, 5175, 5176, 8080];
+      
+      for (const port of ports) {
+        try {
+          const response = await fetch(`http://localhost:${port}/`, { 
+            method: 'HEAD',
+            mode: 'no-cors'
+          });
+          addTestResult(`Port ${port}: Something is running`, 'info');
+        } catch (error) {
+          addTestResult(`Port ${port}: Not in use`, 'info');
+        }
+      }
+    }
+    
+    // Auto-run main test on load
+    window.addEventListener('load', () => {
+      console.log('Diagnostic tool loaded');
+      console.log('Click "Test Main App" to begin diagnostics');
+    });
+  </script>
+</body>
+</html>

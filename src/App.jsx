@@ -38,15 +38,33 @@ function App() {
 
   useEffect(() => {
     // Ensure fonts are loaded before showing content
+    console.log('App: Starting font loading check...')
+    
+    // Set a timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      console.log('App: Font loading timeout reached, showing content anyway')
+      setIsLoading(false)
+    }, 2000)
+    
     document.fonts.ready.then(() => {
+      console.log('App: Fonts loaded successfully')
+      clearTimeout(timeout)
+      setIsLoading(false)
+    }).catch(err => {
+      console.error('App: Font loading error:', err)
+      clearTimeout(timeout)
       setIsLoading(false)
     })
+    
+    return () => clearTimeout(timeout)
   }, [])
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
+  console.log('App: Rendering main app content')
+  
   return (
     <ErrorBoundary>
       <Router>
