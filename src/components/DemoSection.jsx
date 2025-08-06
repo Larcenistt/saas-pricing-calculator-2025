@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
 import Button from './ui/Button';
 
