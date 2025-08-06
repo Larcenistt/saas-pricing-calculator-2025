@@ -62,7 +62,7 @@ export default function BuyButtonWrapper() {
         <stripe-buy-button
           buy-button-id={buttonId}
           publishable-key="pk_live_51RqLWCI6kujeAM5FQSJbNLxHrxgCmrLqTe9187pxEGVbxxRXIeTuDMd7mv6cwAV68ufyvcBgHHRFC8dx0XT6Mxxn003tmk9NAN"
-          success-url="https://predictionnexus.com/success"
+          success-url="https://saas-pricing-calculator.vercel.app/success"
         />
       </div>
       

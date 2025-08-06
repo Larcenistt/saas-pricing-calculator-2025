@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Product**: SaaS Pricing Calculator 2025 Edition  
 **Price**: $99 one-time purchase  
 **Status**: LIVE and accepting payments  
-**URL**: https://predictionnexus.com  
-**Domain**: predictionnexus.com (ACTIVE)  
+**URL**: https://saas-pricing-calculator.vercel.app/  
+**Domain**: saas-pricing-calculator.vercel.app (ACTIVE)  
 **Email**: support@predictionnexus.com (ACTIVE)
 
 ## Current Status (Last Updated: 2025-07-31 @ 5:30 PM)
@@ -126,7 +126,7 @@ src/
 
 **Stripe**:
 - Button ID: `buy_btn_1RqOC7I6kujeAM5FZbqTtxFL`
-- Success URL: `https://predictionnexus.com/success`
+- Success URL: `https://saas-pricing-calculator.vercel.app/success`
 - Test mode: Use 4242 4242 4242 4242
 - Dashboard updated: ✅
 

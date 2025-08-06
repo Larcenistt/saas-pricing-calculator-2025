@@ -30,6 +30,8 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 import './App.css'
 import './modern-dark.css'
 import './smooth-animations.css'
+import './styles/responsive.css'
+import './styles/ultra-futuristic.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -48,13 +50,22 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <div className="min-h-screen bg-secondary">
-          {/* Futuristic Background Elements */}
+        <div className="min-h-screen bg-dark-void">
+          {/* Ultra Futuristic Background Elements */}
+          <div className="hex-bg" />
+          <div className="matrix-rain" />
+          <div className="data-stream" />
+          
+          {/* Animated Grid Background */}
           <div className="futuristic-bg" />
           <div className="grid-overlay" />
+          
+          {/* Scanning Line Effect - handled by CSS */}
           <div className="scan-line" />
+          
+          {/* Floating Particles */}
           <div className="particle-container">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(30)].map((_, i) => (
               <div 
                 key={i} 
                 className="particle" 
