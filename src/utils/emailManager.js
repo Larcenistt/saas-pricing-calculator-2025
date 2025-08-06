@@ -69,12 +69,11 @@ export const getEmailStats = () => {
 
 // Clear all emails (use with caution)
 export const clearAllEmails = () => {
-  if (confirm('Are you sure you want to clear all captured emails? This cannot be undone.')) {
-    localStorage.removeItem('captured_emails');
-    console.log('All emails cleared');
-    return true;
-  }
-  return false;
+  // This should be called with a confirmation from the UI layer
+  // The confirmation should be handled by the component using a modal or toast
+  localStorage.removeItem('captured_emails');
+  console.log('All emails cleared');
+  return true;
 };
 
 // Add these functions to window for easy console access

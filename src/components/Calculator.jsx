@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { 
   LineChart, 
   Line, 
@@ -17,7 +18,6 @@ import {
   Radar 
 } from 'recharts';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
 import Button from './ui/Button';
 import ProgressBar from './ProgressBar';
@@ -26,6 +26,7 @@ import { exportToPDFEnhanced } from '../utils/exportPDFEnhanced';
 import { trackCalculatorUse, trackPDFExport } from '../utils/analytics';
 import { saveCalculation, loadFromUrl, saveToUrl } from '../utils/savedCalculations';
 import SavedCalculations from './SavedCalculations';
+import FlashSaleBuyButton from './FlashSaleBuyButton';
 
 export default function Calculator() {
   const [showSaved, setShowSaved] = useState(false);
@@ -163,19 +164,40 @@ export default function Calculator() {
       // Escape to clear form
       if (e.key === 'Escape') {
         e.preventDefault();
-        if (confirm('Clear all inputs?')) {
-          setInputs({
-            currentPrice: '',
-            competitorPrice: '',
-            customers: '',
-            churnRate: '',
-            cac: '',
-            averageContractLength: '',
-            expansionRevenue: '',
-            marketSize: ''
-          });
-          setResults(null);
-        }
+        // Show toast instead of confirm
+        toast((t) => (
+          <div>
+            <p className="mb-2">Clear all inputs?</p>
+            <div className="flex gap-2">
+              <button
+                className="px-3 py-1 bg-red-500 text-white rounded"
+                onClick={() => {
+                  setInputs({
+                    currentPrice: '',
+                    competitorPrice: '',
+                    customers: '',
+                    churnRate: '',
+                    cac: '',
+                    averageContractLength: '',
+                    expansionRevenue: '',
+                    marketSize: ''
+                  });
+                  setResults(null);
+                  toast.dismiss(t.id);
+                  toast.success('Form cleared');
+                }}
+              >
+                Clear
+              </button>
+              <button
+                className="px-3 py-1 bg-gray-500 text-white rounded"
+                onClick={() => toast.dismiss(t.id)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ), { duration: 5000 });
       }
     };
     
@@ -204,12 +226,12 @@ export default function Calculator() {
 
     // Advanced calculations
     const optimalPrice = competitor > 0 ? competitor * 0.85 : current * 1.35;
-    const ltv = (optimalPrice * contractLength) / (churn / 100);
+    const ltv = churn > 0 ? (optimalPrice * contractLength) / (churn / 100) : optimalPrice * contractLength * 12;
     const ltvCacRatio = ltv / cac;
     const monthlyRevenue = customers * optimalPrice;
     const yearlyRevenue = monthlyRevenue * 12;
     const nrr = 100 + expansion - churn;
-    const quickRatio = (expansion / 100) / (churn / 100);
+    const quickRatio = churn > 0 ? (expansion / 100) / (churn / 100) : expansion > 0 ? Infinity : 0;
     const magicNumber = (yearlyRevenue - (yearlyRevenue * 0.8)) / (cac * customers * 0.25);
     const ruleOf40 = (yearlyRevenue / (yearlyRevenue * 0.8) - 1) * 100 + (100 - churn);
     const paybackPeriod = cac / optimalPrice;
@@ -267,7 +289,8 @@ export default function Calculator() {
     // Revenue projections data
     const projectionData = [];
     for (let i = 0; i <= 12; i++) {
-      const monthCustomers = Math.round(customers * Math.pow(1 + (expansion / 100 - churn / 100), i));
+      const growthRate = 1 + (expansion / 100 - churn / 100);
+      const monthCustomers = Math.round(customers * (growthRate ** i));
       projectionData.push({
         month: i,
         revenue: monthCustomers * optimalPrice,
@@ -826,6 +849,14 @@ export default function Calculator() {
               </GlassCard>
             </div>
           )}
+
+          {/* Flash Sale CTA */}
+          <div className="max-w-md mx-auto mt-8 mb-8">
+            <GlassCard className="border-2 border-green-500/50 bg-gradient-to-r from-green-900/20 to-blue-900/20">
+              <h3 className="text-2xl font-bold text-center mb-4 text-white">Unlock Premium Features!</h3>
+              <FlashSaleBuyButton />
+            </GlassCard>
+          </div>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mt-8">

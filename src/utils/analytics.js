@@ -18,6 +18,11 @@ const track = (eventName, parameters = {}) => {
   }
 };
 
+// Generic event tracking
+export const trackEvent = (eventName, parameters = {}) => {
+  track(eventName, parameters);
+};
+
 // Track page views
 export const trackPageView = (pagePath) => {
   if (isAnalyticsLoaded()) {

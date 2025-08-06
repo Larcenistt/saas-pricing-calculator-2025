@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import HeroSection from '../components/HeroSection-Futuristic';
+import HeroSection from '../components/HeroSection-Modern';
 import FeaturesSection from '../components/FeaturesSection-Modern';
 import TestimonialsSection from '../components/TestimonialsSection-Modern';
+import TestimonialsQuick from '../components/TestimonialsQuick';
 import CTASection from '../components/CTASection-Modern';
 import Footer from '../components/Footer-Modern';
 
@@ -31,6 +32,7 @@ export default function HomePage() {
     <div className="overflow-hidden">
       <HeroSection />
       <FeaturesSection />
+      <TestimonialsQuick />
       <TestimonialsSection />
       <CTASection />
       <Footer />

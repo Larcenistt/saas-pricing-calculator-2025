@@ -1,0 +1,256 @@
+{
+  "dashboard": {
+    "title": "SaaS Pricing Calculator - Production Dashboard",
+    "tags": ["production", "saas", "monitoring"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "API Response Time (p95)",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service))",
+            "legendFormat": "{{service}} p95"
+          }
+        ],
+        "alert": {
+          "name": "High Response Time",
+          "conditions": [
+            {
+              "evaluator": { "params": [2], "type": "gt" },
+              "query": { "params": ["A", "5m", "now"] },
+              "type": "query"
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "title": "Active Users",
+        "type": "stat",
+        "gridPos": { "h": 8, "w": 6, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "expr": "sum(rate(user_sessions_active[5m]))",
+            "format": "time_series"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Revenue Metrics",
+        "type": "stat",
+        "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+        "targets": [
+          {
+            "expr": "sum(subscription_mrr_total)",
+            "legendFormat": "MRR"
+          },
+          {
+            "expr": "sum(rate(purchase_completed_total[24h])) * 99",
+            "legendFormat": "Daily Revenue"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) * 100",
+            "legendFormat": "Error Rate %"
+          }
+        ],
+        "alert": {
+          "name": "High Error Rate",
+          "conditions": [
+            {
+              "evaluator": { "params": [5], "type": "gt" },
+              "query": { "params": ["A", "5m", "now"] },
+              "type": "query"
+            }
+          ]
+        }
+      },
+      {
+        "id": 5,
+        "title": "Database Performance",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+        "targets": [
+          {
+            "expr": "pg_stat_database_numbackends",
+            "legendFormat": "Active Connections"
+          },
+          {
+            "expr": "rate(pg_stat_statements_mean_exec_time_seconds[5m])",
+            "legendFormat": "Query Time"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Conversion Funnel",
+        "type": "funnel",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+        "targets": [
+          {
+            "expr": "sum(page_views_total{page=\"/\"})",
+            "legendFormat": "Homepage Visits"
+          },
+          {
+            "expr": "sum(page_views_total{page=\"/calculator\"})",
+            "legendFormat": "Calculator Used"
+          },
+          {
+            "expr": "sum(page_views_total{page=\"/pricing\"})",
+            "legendFormat": "Pricing Viewed"
+          },
+          {
+            "expr": "sum(purchase_initiated_total)",
+            "legendFormat": "Checkout Started"
+          },
+          {
+            "expr": "sum(purchase_completed_total)",
+            "legendFormat": "Purchase Completed"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "System Resources",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+        "targets": [
+          {
+            "expr": "sum(container_memory_usage_bytes) / sum(container_spec_memory_limit_bytes) * 100",
+            "legendFormat": "Memory Usage %"
+          },
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total[5m])) * 100",
+            "legendFormat": "CPU Usage %"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Cache Hit Rate",
+        "type": "gauge",
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 24 },
+        "targets": [
+          {
+            "expr": "redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total) * 100",
+            "format": "time_series"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "API Endpoints Performance",
+        "type": "table",
+        "gridPos": { "h": 8, "w": 18, "x": 6, "y": 24 },
+        "targets": [
+          {
+            "expr": "topk(10, sum by (endpoint, method) (rate(http_request_duration_seconds_sum[5m])) / sum by (endpoint, method) (rate(http_request_duration_seconds_count[5m])))",
+            "format": "table"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Business KPIs",
+        "type": "row",
+        "gridPos": { "h": 1, "w": 24, "x": 0, "y": 32 },
+        "panels": [
+          {
+            "title": "LTV",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "avg(customer_lifetime_value)",
+                "format": "time_series"
+              }
+            ]
+          },
+          {
+            "title": "CAC",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "sum(marketing_spend_total) / sum(new_customers_total)",
+                "format": "time_series"
+              }
+            ]
+          },
+          {
+            "title": "Churn Rate",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "sum(rate(subscription_cancelled_total[30d])) / sum(subscription_active_total) * 100",
+                "format": "time_series"
+              }
+            ]
+          },
+          {
+            "title": "NPS Score",
+            "type": "gauge",
+            "targets": [
+              {
+                "expr": "avg(customer_nps_score)",
+                "format": "time_series"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "deployments{environment=\"production\"}",
+          "iconColor": "green",
+          "name": "Deployments",
+          "tagKeys": "version",
+          "titleFormat": "Deployment"
+        },
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "incidents{severity=\"critical\"}",
+          "iconColor": "red",
+          "name": "Incidents",
+          "tagKeys": "description",
+          "titleFormat": "Incident"
+        }
+      ]
+    },
+    "links": [
+      {
+        "title": "Application",
+        "type": "link",
+        "url": "https://predictionnexus.com",
+        "targetBlank": true
+      },
+      {
+        "title": "API Health",
+        "type": "link",
+        "url": "https://api.predictionnexus.com/health",
+        "targetBlank": true
+      },
+      {
+        "title": "Logs",
+        "type": "link",
+        "url": "https://logs.predictionnexus.com",
+        "targetBlank": true
+      }
+    ]
+  }
+}

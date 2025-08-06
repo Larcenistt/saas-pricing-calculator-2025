@@ -27,11 +27,30 @@ export default function SavedCalculations({ onLoad }) {
   };
 
   const handleDelete = (id) => {
-    if (confirm('Are you sure you want to delete this calculation?')) {
-      deleteCalculation(id);
-      loadCalculations();
-      toast.success('Calculation deleted');
-    }
+    toast((t) => (
+      <div>
+        <p className="mb-2">Delete this calculation?</p>
+        <div className="flex gap-2">
+          <button
+            className="px-3 py-1 bg-red-500 text-white rounded"
+            onClick={() => {
+              deleteCalculation(id);
+              loadCalculations();
+              toast.dismiss(t.id);
+              toast.success('Calculation deleted');
+            }}
+          >
+            Delete
+          </button>
+          <button
+            className="px-3 py-1 bg-gray-500 text-white rounded"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ), { duration: 5000 });
   };
 
   const handleRename = (id) => {

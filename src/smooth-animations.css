@@ -1,0 +1,223 @@
+/* Smooth Professional Animations */
+
+/* Disable janky particle animations on slower devices */
+@media (max-width: 768px) {
+  .particle-container {
+    display: none !important;
+  }
+  
+  .scan-line {
+    display: none !important;
+  }
+}
+
+/* Smooth all transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Fix flickering animations */
+.holographic {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: background-position;
+}
+
+/* Smooth hover transitions */
+button, a, .btn, .btn-neon {
+  transition: all 0.2s ease !important;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+button:hover, a:hover, .btn:hover, .btn-neon:hover {
+  transition: all 0.2s ease !important;
+}
+
+/* Fix input focus transitions */
+input, textarea, select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* Smooth card animations */
+.glass-card-pro, .data-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  transform: translateZ(0);
+}
+
+/* Fix navigation transitions */
+.nav-futuristic {
+  transition: padding 0.3s ease, background 0.3s ease !important;
+}
+
+.nav-item-futuristic {
+  transition: color 0.2s ease, background 0.2s ease !important;
+}
+
+.nav-item-futuristic::after {
+  transition: width 0.3s ease !important;
+}
+
+/* Smooth modal/popup animations */
+.modal, .popup {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Fix loading animations */
+.loading-futuristic {
+  animation: spin 1s linear infinite !important;
+}
+
+/* Smooth scroll animations */
+[data-animate] {
+  transition: opacity 0.6s ease, transform 0.6s ease !important;
+}
+
+[data-animate].animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fix countdown timer flicker */
+.countdown-timer {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .particle-container,
+  .scan-line,
+  .grid-overlay {
+    display: none !important;
+  }
+}
+
+/* Fix chart animations */
+.recharts-wrapper {
+  transition: none !important;
+}
+
+.recharts-surface {
+  transition: none !important;
+}
+
+/* Smooth gradient animations */
+.gradient-border::before {
+  animation: gradient-shift 4s ease infinite !important;
+}
+
+/* Fix floating element performance */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) translateZ(0); 
+  }
+  50% { 
+    transform: translateY(-20px) translateZ(0); 
+  }
+}
+
+/* Optimize neon glow effects */
+.neon-text {
+  text-shadow: 
+    0 0 10px currentColor,
+    0 0 20px currentColor;
+  animation: none !important;
+}
+
+.neon-text:hover {
+  text-shadow: 
+    0 0 15px currentColor,
+    0 0 30px currentColor;
+  transition: text-shadow 0.3s ease !important;
+}
+
+/* Fix button shine effect */
+.btn-neon::before {
+  transition: left 0.5s ease !important;
+}
+
+/* Smooth toast animations */
+.toast {
+  animation: slideIn 0.3s ease !important;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Fix glass card hover */
+.glass-card-pro:hover {
+  transition-duration: 0.3s !important;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: pageIn 0.4s ease !important;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fix mobile menu animations */
+.mobile-menu {
+  transition: height 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* Optimize background animations */
+.futuristic-bg::before {
+  animation: gradient-shift 20s ease infinite !important;
+}
+
+.cyber-grid {
+  animation: grid-move 15s linear infinite !important;
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

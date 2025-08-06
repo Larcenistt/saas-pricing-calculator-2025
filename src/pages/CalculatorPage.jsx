@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Calculator from '../components/Calculator';
-import CompetitorComparison from '../components/CompetitorComparison';
 import GlassCard from '../components/ui/GlassCard';
+import LoadingScreen from '../components/LoadingScreen';
+
+// Lazy load heavy components
+const CalculatorEnhanced = lazy(() => import('../components/CalculatorEnhanced'));
+const CompetitorComparison = lazy(() => import('../components/CompetitorComparison'));
 
 export default function CalculatorPage() {
   const navigate = useNavigate();
@@ -70,13 +73,15 @@ export default function CalculatorPage() {
         </div>
 
         <div>
-          {activeTab === 'calculator' ? (
-            <Calculator />
-          ) : (
-            <GlassCard className="p-8">
-              <CompetitorComparison />
-            </GlassCard>
-          )}
+          <Suspense fallback={<LoadingScreen />}>
+            {activeTab === 'calculator' ? (
+              <CalculatorEnhanced />
+            ) : (
+              <GlassCard className="p-8">
+                <CompetitorComparison />
+              </GlassCard>
+            )}
+          </Suspense>
         </div>
       </div>
     </div>

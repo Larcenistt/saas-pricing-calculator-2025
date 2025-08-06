@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
 
 export default function TestimonialCarousel() {

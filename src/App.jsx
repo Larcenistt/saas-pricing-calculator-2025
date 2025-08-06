@@ -3,12 +3,14 @@ import { Toaster } from 'react-hot-toast'
 import { useState, useEffect, lazy, Suspense } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingScreen from './components/LoadingScreen'
-import Navigation from './components/Navigation-Modern'
-import PurchaseNotifications from './components/PurchaseNotifications-Professional'
-import ExitIntentPopup from './components/ExitIntentPopup-Professional'
+import Navigation from './components/Navigation-Professional'
+import PurchaseNotifications from './components/PurchaseNotifications'
+import ExitIntentOffer from './components/ExitIntentOffer'
 import EmailCapturePopup from './components/EmailCapturePopup'
-import LiveChat from './components/LiveChat'
+import SimpleLiveChat from './components/SimpleLiveChat'
 import NetworkStatus from './components/NetworkStatus'
+import LivePurchaseNotifications from './components/LivePurchaseNotifications'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage-Modern'))
@@ -20,8 +22,14 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const TermsPage = lazy(() => import('./pages/TermsPage'))
 const ResourcesPage = lazy(() => import('./pages/ResourcesPage'))
 const ReferralPage = lazy(() => import('./pages/ReferralPage'))
+
+// Auth pages
+const LoginPage = lazy(() => import('./pages/LoginPage'))
+const RegisterPage = lazy(() => import('./pages/RegisterPage'))
+const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 import './App.css'
 import './modern-dark.css'
+import './smooth-animations.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -61,10 +69,11 @@ function App() {
           
           <Navigation />
           <PurchaseNotifications />
-          <ExitIntentPopup />
+          <ExitIntentOffer />
           <EmailCapturePopup />
-          <LiveChat />
+          <SimpleLiveChat />
           <NetworkStatus />
+          <LivePurchaseNotifications />
           <Toaster
           position="bottom-right"
           toastOptions={{
@@ -90,6 +99,20 @@ function App() {
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
+            
+            {/* Auth routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            
+            {/* Protected routes */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </Suspense>
       </div>
