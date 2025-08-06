@@ -6,7 +6,7 @@ const router = Router();
 // Placeholder for analytics routes
 router.use(authenticate);
 
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', (_req, res) => {
   res.json({ message: 'Analytics dashboard data to be implemented' });
 });
 

@@ -36,7 +36,7 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 app.use('/api', rateLimiter);
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),

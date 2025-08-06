@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.service';
 import { registerSchema, loginSchema, resetPasswordSchema } from '../utils/validators';
 import { AppError } from '../utils/errors';
-import { logger } from '../utils/logger';
 
 const authService = new AuthService();
 

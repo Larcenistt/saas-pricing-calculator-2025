@@ -1,0 +1,36 @@
+DNS CONFIGURATION FOR PREDICTIONNEXUS.COM
+==========================================
+
+NAMECHEAP DNS SETTINGS (Add these records):
+--------------------------------------------
+
+1. A RECORD (Root Domain):
+   Host: @
+   Value: 76.76.21.21
+   TTL: Automatic
+
+2. CNAME RECORD (WWW):
+   Host: www
+   Value: cname.vercel-dns.com
+   TTL: Automatic
+
+3. DELETE any existing A or CNAME records for @ and www first!
+
+VERCEL DASHBOARD:
+-----------------
+1. Go to: https://vercel.com/dashboard
+2. Select your project
+3. Go to Settings → Domains
+4. Add: predictionnexus.com
+5. Add: www.predictionnexus.com
+
+VERIFICATION:
+-------------
+After 5-30 minutes, check:
+- https://www.predictionnexus.com (should load your site)
+- https://predictionnexus.com (should redirect to www)
+
+Current Status:
+- Site is LIVE at: https://saas-pricing-calculator.vercel.app ✅
+- DNS needs updating: predictionnexus.com currently points to 216.198.79.1 (WRONG)
+- Should point to: 76.76.21.21 (Vercel)

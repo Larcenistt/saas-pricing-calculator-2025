@@ -8,7 +8,7 @@ export const errorHandler = (
   error: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   // Log error
   logger.error({
@@ -101,7 +101,7 @@ export const errorHandler = (
   // Default error response
   const isDevelopment = process.env.NODE_ENV === 'development';
   
-  res.status(500).json({
+  return res.status(500).json({
     success: false,
     error: {
       message: isDevelopment ? error.message : 'Internal server error',
@@ -114,7 +114,7 @@ export const errorHandler = (
 export const notFoundHandler = (
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   res.status(404).json({
     success: false,

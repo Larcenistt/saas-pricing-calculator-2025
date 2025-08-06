@@ -6,7 +6,7 @@ const router = Router();
 // Placeholder for subscription routes
 router.use(authenticate);
 
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({ message: 'Subscription routes to be implemented' });
 });
 

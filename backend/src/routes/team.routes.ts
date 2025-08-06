@@ -6,7 +6,7 @@ const router = Router();
 // Placeholder for team routes
 router.use(authenticate);
 
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({ message: 'Team routes to be implemented' });
 });
 

@@ -21,16 +21,8 @@ export default function StripeBuyButton({ className = "" }) {
 
   // Custom styling wrapper
   return (
-    <div className={`stripe-button-wrapper ${className}`}>
-      <div ref={containerRef}></div>
-      <style jsx>{`
-        .stripe-button-wrapper {
-          width: 100%;
-        }
-        .stripe-button-wrapper stripe-buy-button {
-          width: 100%;
-        }
-      `}</style>
+    <div className={`stripe-button-wrapper ${className}`} style={{ width: '100%' }}>
+      <div ref={containerRef} style={{ width: '100%' }}></div>
     </div>
   );
 }

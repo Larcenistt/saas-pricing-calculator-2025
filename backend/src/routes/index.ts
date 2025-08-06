@@ -9,7 +9,7 @@ import analyticsRoutes from './analytics.routes';
 const router = Router();
 
 // Health check
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({
     success: true,
     message: 'SaaS Pricing Calculator API v1',
