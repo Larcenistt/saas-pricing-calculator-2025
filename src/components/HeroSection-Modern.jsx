@@ -63,18 +63,21 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="mb-6 text-5xl md:text-6xl font-bold">
-            Data-Driven SaaS Pricing
-            <span className="block mt-2 text-4xl md:text-5xl">
-              <span className="gradient-text">That Increases Revenue</span>
+          {/* Main Heading with Premium Styling */}
+          <h1 className="mb-8 text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tight">
+            <span className="block mb-2">Bridge The Gap Between</span>
+            <span className="block bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent animate-glow">
+              Free Tools & $50K Solutions
+            </span>
+            <span className="block text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-400 mt-4 opacity-90">
+              Professional Pricing Tools from $99
             </span>
           </h1>
 
           {/* Subtitle with Value Proposition */}
           <p className="lead max-w-3xl mx-auto mb-6 text-lg md:text-xl">
-            Advanced analytics and competitor insights to optimize your pricing strategy. 
-            Get actionable recommendations based on real market data.
+            Stop choosing between useless free calculators and unaffordable enterprise tools. 
+            Get professional pricing optimization that increases revenue by 20-80% in 90 days.
           </p>
           
           {/* Value Stack */}
@@ -84,7 +87,7 @@ export default function HeroSection() {
               <span>•</span>
               <span className="line-through">$299</span>
               <span>•</span>
-              <span className="text-accent font-bold text-base">Only $99 Today</span>
+              <span className="text-accent font-bold text-base">Starting at $99</span>
               <span>•</span>
               <span>✅ Instant Access</span>
             </div>
@@ -95,34 +98,47 @@ export default function HeroSection() {
             <UrgencyCountdown />
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link to="/calculator" className="btn btn-primary btn-lg">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              Start Free Analysis
+          {/* Premium CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
+            <Link 
+              to="/calculator" 
+              className="group relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-500 hover:via-primary-400 hover:to-secondary-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-primary-500/40 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <div className="relative flex items-center gap-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>Start Free Analysis</span>
+                <div className="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></div>
+              </div>
             </Link>
-            <a 
-              href="#demo-video"
-              className="btn btn-secondary btn-lg group"
+            
+            <button 
+              className="group relative bg-glass-primary hover:bg-glass-secondary backdrop-blur-xl border border-glass-border hover:border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
               onClick={(e) => {
                 e.preventDefault();
-                // Show toast instead of alert for better UX
                 import('react-hot-toast').then(({ default: toast }) => {
-                  toast('Demo video coming soon! Meanwhile, try the free calculator.', {
-                    icon: '🎥',
-                    duration: 4000
+                  toast('🎥 Demo video coming soon! Meanwhile, try the free calculator.', {
+                    duration: 4000,
+                    style: {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      backdropFilter: 'blur(16px)',
+                      color: 'white',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                    },
                   });
                 });
               }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Watch Demo
-            </a>
+              <div className="relative flex items-center gap-3">
+                <svg className="w-6 h-6 group-hover:text-accent-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Watch Demo</span>
+              </div>
+            </button>
           </div>
 
           {/* Stats Grid */}

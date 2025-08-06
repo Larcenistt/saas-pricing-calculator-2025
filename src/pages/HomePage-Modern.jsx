@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import HeroSection from '../components/HeroSection-Modern';
+import MarketPositioning from '../components/MarketPositioning';
 import FeaturesSection from '../components/FeaturesSection-Modern';
 import TestimonialsSection from '../components/TestimonialsSection-Modern';
 import TestimonialsQuick from '../components/TestimonialsQuick';
-import CTASection from '../components/CTASection-Modern';
+import TieredPricing from '../components/TieredPricing';
 import Footer from '../components/Footer-Modern';
 
 export default function HomePage() {
+  console.log('HomePage-Modern: Rendering')
+  
   // Add smooth scroll animations
   useEffect(() => {
     const observerOptions = {
@@ -31,10 +34,11 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden">
       <HeroSection />
+      <MarketPositioning />
       <FeaturesSection />
       <TestimonialsQuick />
       <TestimonialsSection />
-      <CTASection />
+      <TieredPricing />
       <Footer />
     </div>
   );
