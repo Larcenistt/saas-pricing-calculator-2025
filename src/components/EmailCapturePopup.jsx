@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
 import Button from './ui/Button';
 import toast from 'react-hot-toast';
