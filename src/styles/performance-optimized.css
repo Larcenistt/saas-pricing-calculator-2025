@@ -1,0 +1,332 @@
+/* Performance Optimized CSS - WealthFlow Premium */
+
+/* GPU-Accelerated Base Styles */
+:root {
+  /* Performance-first CSS variables */
+  --gpu-layer: translateZ(0);
+  --smooth-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --fast-timing: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --bounce-timing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Optimized shadows with reduced blur for better performance */
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-strong: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+  
+  /* Reduced motion preferences */
+  --motion-duration: 0.3s;
+  --motion-distance: 10px;
+}
+
+/* Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0.01ms !important;
+    --motion-distance: 0px !important;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Hide purely decorative animations */
+  .scan-line,
+  .matrix-rain,
+  .data-stream,
+  .particle,
+  .floating-element {
+    display: none !important;
+  }
+}
+
+/* Base Performance Optimizations */
+* {
+  /* Enable hardware acceleration where beneficial */
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize commonly animated elements */
+.animate-optimized {
+  will-change: transform, opacity;
+  transform: var(--gpu-layer);
+  transition: transform var(--motion-duration) var(--smooth-timing),
+              opacity var(--motion-duration) var(--smooth-timing);
+}
+
+/* Performance-first glass morphism */
+.glass-optimized {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px); /* Reduced from 12px for better performance */
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  will-change: transform, background;
+  transform: var(--gpu-layer);
+}
+
+/* Optimized hover states */
+.glass-optimized:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateZ(0) scale(1.02);
+}
+
+/* Critical path animations - prioritized loading */
+@keyframes slideInOptimized {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--motion-distance)) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+@keyframes fadeInOptimized {
+  0% {
+    opacity: 0;
+    transform: translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+@keyframes scaleInOptimized {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+/* Button optimizations */
+.btn-optimized {
+  will-change: transform, box-shadow;
+  transform: var(--gpu-layer);
+  transition: all 0.2s var(--smooth-timing);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-optimized:hover {
+  transform: translateZ(0) translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn-optimized:active {
+  transform: translateZ(0) translateY(0);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Chart and visualization optimizations */
+.chart-container {
+  /* Optimize rendering for charts */
+  transform: var(--gpu-layer);
+  will-change: contents;
+  contain: layout style paint;
+}
+
+/* Recharts performance optimizations */
+.recharts-wrapper {
+  /* Improve SVG rendering performance */
+  shape-rendering: geometricPrecision;
+  text-rendering: optimizeSpeed;
+}
+
+.recharts-cartesian-grid line,
+.recharts-cartesian-axis line {
+  /* Reduce overdraw */
+  shape-rendering: crispEdges;
+}
+
+/* Input field optimizations */
+.input-optimized {
+  will-change: border-color, box-shadow;
+  transition: border-color 0.15s var(--smooth-timing),
+              box-shadow 0.15s var(--smooth-timing);
+  transform: var(--gpu-layer);
+}
+
+/* Modal and overlay optimizations */
+.modal-optimized {
+  will-change: opacity, transform;
+  transform: var(--gpu-layer);
+  backdrop-filter: blur(4px); /* Reduced blur for better performance */
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Loading animations - lightweight */
+.spinner-optimized {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spinOptimized 0.8s linear infinite;
+  transform: var(--gpu-layer);
+}
+
+@keyframes spinOptimized {
+  0% { transform: translateZ(0) rotate(0deg); }
+  100% { transform: translateZ(0) rotate(360deg); }
+}
+
+/* Progressive enhancement for slower devices */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .glass-optimized {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  /* Disable non-essential animations on mobile */
+  .floating-animation,
+  .complex-gradient,
+  .particle-effect {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Optimize touch interactions */
+  .btn-optimized:active {
+    transform: translateZ(0) scale(0.98);
+  }
+}
+
+/* High-performance custom properties for dynamic theming */
+.theme-optimized {
+  --primary-hue: 162;
+  --primary-sat: 73%;
+  --primary-light: 37%;
+  
+  /* Computed colors for better performance than calc() */
+  --primary-50: hsl(var(--primary-hue), var(--primary-sat), 97%);
+  --primary-100: hsl(var(--primary-hue), var(--primary-sat), 93%);
+  --primary-200: hsl(var(--primary-hue), var(--primary-sat), 85%);
+  --primary-300: hsl(var(--primary-hue), var(--primary-sat), 72%);
+  --primary-400: hsl(var(--primary-hue), var(--primary-sat), 59%);
+  --primary-500: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
+  --primary-600: hsl(var(--primary-hue), var(--primary-sat), 33%);
+  --primary-700: hsl(var(--primary-hue), var(--primary-sat), 28%);
+  --primary-800: hsl(var(--primary-hue), var(--primary-sat), 24%);
+  --primary-900: hsl(var(--primary-hue), var(--primary-sat), 20%);
+}
+
+/* Container query optimizations for responsive design */
+@supports (container-type: inline-size) {
+  .responsive-container {
+    container-type: inline-size;
+  }
+  
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @container (min-width: 768px) {
+    .responsive-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @container (min-width: 1024px) {
+    .responsive-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+/* Memory leak prevention */
+.component-cleanup {
+  /* Prevent memory leaks in dynamic components */
+  contain: layout style;
+}
+
+/* Performance monitoring utilities */
+.perf-critical {
+  /* Mark critical performance sections */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+}
+
+/* Intersection Observer optimization */
+.lazy-load-trigger {
+  /* Optimize lazy loading boundaries */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100px;
+}
+
+/* Focus management optimizations */
+.focus-optimized:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.focus-optimized:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Print stylesheet optimizations */
+@media print {
+  .no-print,
+  .glass-optimized::before,
+  .glass-optimized::after,
+  .animation-element {
+    display: none !important;
+  }
+  
+  .glass-optimized {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Accessibility enhancements */
+@media (prefers-contrast: high) {
+  .glass-optimized {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Performance utilities */
+.gpu-accelerated {
+  transform: var(--gpu-layer);
+  will-change: transform;
+}
+
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+/* Critical rendering path optimization */
+.above-fold {
+  /* Optimize above-the-fold content */
+  content-visibility: visible;
+}
+
+.below-fold {
+  /* Optimize below-the-fold content */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}

@@ -3,12 +3,14 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { createServer } from 'http';
 import { PrismaClient } from '@prisma/client';
 import { errorHandler } from './middleware/error.middleware';
 import { rateLimiter } from './middleware/rateLimiter.middleware';
 import { logger } from './utils/logger';
 import routes from './routes';
 import { initializeRedis } from './config/redis';
+import { initializeCollaboration } from './services/collaboration.service';
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +22,7 @@ export const prisma = new PrismaClient({
 
 // Initialize Express app
 const app: Application = express();
+const httpServer = createServer(app);
 const PORT = process.env.PORT || 3001;
 
 // Middleware
@@ -80,9 +83,13 @@ const startServer = async () => {
     await prisma.$connect();
     logger.info('Database connected successfully');
 
-    app.listen(PORT, () => {
+    // Initialize WebSocket collaboration
+    initializeCollaboration(httpServer);
+
+    httpServer.listen(PORT, () => {
       logger.info(`Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`);
       logger.info(`API URL: http://localhost:${PORT}/api/v1`);
+      logger.info(`WebSocket server initialized for real-time collaboration`);
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

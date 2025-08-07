@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LineChart, 
   Line, 
@@ -19,6 +19,9 @@ import {
 } from 'recharts';
 import toast from 'react-hot-toast';
 import GlassCard from './ui/GlassCard';
+import GradientButton from './ui/GradientButton';
+import PremiumLoader from './ui/PremiumLoader';
+import SuccessCelebration from './ui/SuccessCelebration';
 import Button from './ui/Button';
 import ProgressBar from './ProgressBar';
 import { exportToPDF } from '../utils/exportPDF';
@@ -46,6 +49,8 @@ export default function Calculator() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isCalculating, setIsCalculating] = useState(false);
   const [calculationProgress, setCalculationProgress] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [isWizardMode, setIsWizardMode] = useState(false);
   
   // Calculate progress based on filled inputs
   const calculateProgress = () => {
@@ -219,21 +224,30 @@ export default function Calculator() {
     setIsCalculating(true);
     setCalculationProgress(0);
     
-    // Simulate premium calculation process with progress
+    // Enhanced premium calculation process with WealthFlow branding
     const progressSteps = [
-      { step: 10, message: 'Parsing your input data...' },
-      { step: 25, message: 'Analyzing competitor pricing...' },
-      { step: 40, message: 'Computing SaaS metrics...' },
-      { step: 60, message: 'Running AI optimization algorithms...' },
-      { step: 80, message: 'Generating insights and recommendations...' },
+      { step: 8, message: 'Initializing WealthFlow AI engine...' },
+      { step: 18, message: 'Parsing your business data...' },
+      { step: 32, message: 'Analyzing competitor landscape...' },
+      { step: 48, message: 'Computing advanced SaaS metrics...' },
+      { step: 65, message: 'Running pricing optimization algorithms...' },
+      { step: 78, message: 'Generating AI-powered insights...' },
+      { step: 88, message: 'Calculating revenue projections...' },
       { step: 95, message: 'Finalizing your premium analysis...' },
-      { step: 100, message: 'Complete!' }
+      { step: 100, message: 'Analysis complete!' }
     ];
     
     for (const progressStep of progressSteps) {
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise(resolve => setTimeout(resolve, 400));
       setCalculationProgress(progressStep.step);
-      toast.loading(progressStep.message, { id: 'calculation-progress' });
+      toast.loading(progressStep.message, { 
+        id: 'calculation-progress',
+        style: {
+          background: 'rgba(16, 185, 129, 0.1)',
+          border: '1px solid rgba(16, 185, 129, 0.2)',
+          color: '#10b981'
+        }
+      });
     }
     
     // Parse inputs
@@ -373,11 +387,17 @@ export default function Calculator() {
     setIsCalculating(false);
     setCalculationProgress(0);
     toast.dismiss('calculation-progress');
-    toast.success('🎉 Premium analysis complete! Your personalized recommendations are ready.', {
-      duration: 5000,
+    
+    // Show premium success celebration
+    setShowCelebration(true);
+    
+    toast.success('🎉 WealthFlow Analysis Complete! Your premium insights are ready.', {
+      duration: 6000,
       style: {
-        background: '#10b981',
+        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(30, 64, 175, 0.9))',
         color: 'white',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(12px)'
       },
     });
   };
@@ -429,32 +449,100 @@ export default function Calculator() {
   const progressSteps = ['Start', 'Basic Info', 'Market Data', 'Advanced Metrics', 'Results'];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="glass-card-pro p-8"
-    >
-      <div className="flex justify-between items-start mb-8">
-        <h2 className="text-3xl font-bold holographic">Advanced SaaS Pricing Calculator</h2>
-        
-        {/* Keyboard Shortcuts Guide */}
-        <div className="hidden md:block">
-          <details className="text-sm">
-            <summary className="cursor-pointer text-gray-400 hover:text-white transition-colors">
-              ⌨️ Shortcuts
-            </summary>
-            <div className="absolute right-0 mt-2 p-4 glass rounded-lg text-gray-300 z-10">
-              <div className="space-y-1">
-                <p><kbd className="px-2 py-1 bg-gray-800 rounded text-xs">Ctrl</kbd> + <kbd className="px-2 py-1 bg-gray-800 rounded text-xs">Enter</kbd> = Calculate</p>
-                <p><kbd className="px-2 py-1 bg-gray-800 rounded text-xs">Ctrl</kbd> + <kbd className="px-2 py-1 bg-gray-800 rounded text-xs">E</kbd> = Export PDF</p>
-                <p><kbd className="px-2 py-1 bg-gray-800 rounded text-xs">←</kbd> <kbd className="px-2 py-1 bg-gray-800 rounded text-xs">→</kbd> = Navigate tabs</p>
-                <p><kbd className="px-2 py-1 bg-gray-800 rounded text-xs">Esc</kbd> = Clear form</p>
-              </div>
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ 
+          duration: 0.8, 
+          ease: [0.16, 1, 0.3, 1],
+          type: 'spring',
+          damping: 25,
+          stiffness: 200
+        }}
+        className="w-full max-w-7xl mx-auto"
+      >
+        <GlassCard variant="default" glow animate className="p-8 lg:p-12">
+          
+          {/* Header Section with WealthFlow Branding */}
+          <motion.div 
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 lg:mb-12 gap-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <div className="flex-1">
+              <motion.h1 
+                className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent mb-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                WealthFlow
+              </motion.h1>
+              <motion.p 
+                className="text-lg text-neutral-300"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                AI-Powered SaaS Pricing Intelligence Platform
+              </motion.p>
             </div>
-          </details>
-        </div>
-      </div>
+        
+            {/* Premium Keyboard Shortcuts Guide */}
+            <motion.div 
+              className="hidden lg:block relative"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
+              <details className="group">
+                <summary className="cursor-pointer text-neutral-400 hover:text-white transition-all duration-200 
+                                 flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-glass-primary">
+                  <span className="text-lg">⌨️</span>
+                  <span className="font-medium">Shortcuts</span>
+                </summary>
+                <motion.div 
+                  className="absolute right-0 top-full mt-2 p-4 bg-glass-surface border border-glass-border 
+                           rounded-2xl backdrop-blur-xl shadow-premium z-20 min-w-[280px]"
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-neutral-300">Calculate</span>
+                      <div className="flex gap-1">
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">Ctrl</kbd>
+                        <span className="text-neutral-500">+</span>
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">Enter</kbd>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-neutral-300">Export PDF</span>
+                      <div className="flex gap-1">
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">Ctrl</kbd>
+                        <span className="text-neutral-500">+</span>
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">E</kbd>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-neutral-300">Navigate</span>
+                      <div className="flex gap-1">
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">←</kbd>
+                        <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">→</kbd>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-neutral-300">Clear form</span>
+                      <kbd className="px-2 py-1 bg-neutral-800/50 border border-neutral-700 rounded-lg text-xs text-neutral-300">Esc</kbd>
+                    </div>
+                  </div>
+                </motion.div>
+              </details>
+            </motion.div>
+          </motion.div>
       
       {/* Progress Bar */}
       <ProgressBar 
@@ -463,43 +551,66 @@ export default function Calculator() {
         steps={progressSteps}
       />
       
-      {/* Save/Load Controls */}
-      <div className="flex justify-center gap-3 mt-6 mb-6">
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={() => setShowSaved(!showSaved)}
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-          </svg>
-          {showSaved ? 'Hide Saved' : 'View Saved'}
-        </Button>
-        {results && (
-          <>
-            <Button
+          {/* Premium Save/Load Controls */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-3 mt-8 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <GradientButton
               size="sm"
-              variant="secondary"
-              onClick={handleSaveCalculation}
+              variant="outline"
+              onClick={() => setShowSaved(!showSaved)}
+              icon={
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
+              }
+              animate
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V2" />
-              </svg>
-              Save
-            </Button>
-            <Button
-              size="sm"
-              variant="secondary"
-              onClick={handleShareCalculation}
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              Share
-            </Button>
-          </>
-        )}
-      </div>
+              {showSaved ? 'Hide Saved' : 'View Saved'}
+            </GradientButton>
+            
+            <AnimatePresence>
+              {results && (
+                <motion.div 
+                  className="flex gap-3"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <GradientButton
+                    size="sm"
+                    variant="glass"
+                    onClick={handleSaveCalculation}
+                    icon={
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V2" />
+                      </svg>
+                    }
+                    animate
+                  >
+                    Save Analysis
+                  </GradientButton>
+                  <GradientButton
+                    size="sm"
+                    variant="glass"
+                    onClick={handleShareCalculation}
+                    icon={
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                      </svg>
+                    }
+                    animate
+                  >
+                    Share Results
+                  </GradientButton>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
       
       {/* Saved Calculations */}
       {showSaved && (
@@ -508,158 +619,166 @@ export default function Calculator() {
         </div>
       )}
       
-      {/* Input Section */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Current Price ($/mo)
-          </label>
-          <input
-            type="number"
-            name="currentPrice"
-            value={inputs.currentPrice}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="49"
-          />
-        </div>
+          {/* Premium Input Section */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, staggerChildren: 0.1 }}
+          >
+            {[
+              { name: 'currentPrice', label: 'Current Price', placeholder: '49', prefix: '$', suffix: '/mo', required: true },
+              { name: 'competitorPrice', label: 'Competitor Price', placeholder: '79', prefix: '$', suffix: '/mo' },
+              { name: 'customers', label: 'Current Customers', placeholder: '250', required: true },
+              { name: 'churnRate', label: 'Monthly Churn', placeholder: '5', suffix: '%', required: true },
+              { name: 'cac', label: 'Customer Acquisition Cost', placeholder: '100', prefix: '$' },
+              { name: 'averageContractLength', label: 'Avg Contract Length', placeholder: '12', suffix: ' months' },
+              { name: 'expansionRevenue', label: 'Expansion Revenue', placeholder: '10', suffix: '%' },
+              { name: 'marketSize', label: 'Total Market Size', placeholder: '1000000', prefix: '$' }
+            ].map((field, index) => (
+              <motion.div
+                key={field.name}
+                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
+              >
+                <label className="block text-sm font-semibold text-neutral-300 mb-3 flex items-center gap-2">
+                  {field.label}
+                  {field.required && <span className="text-accent-400 text-xs">*</span>}
+                </label>
+                <div className="relative">
+                  {field.prefix && (
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none text-sm font-medium">
+                      {field.prefix}
+                    </div>
+                  )}
+                  <motion.input
+                    type="number"
+                    name={field.name}
+                    value={inputs[field.name]}
+                    onChange={handleInputChange}
+                    className={`
+                      w-full px-4 py-3 bg-glass-surface border border-glass-border rounded-xl
+                      text-white placeholder-neutral-500 transition-all duration-300
+                      focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50
+                      hover:border-glass-border-strong hover:bg-glass-primary/30
+                      ${field.prefix ? 'pl-8' : ''}
+                      ${field.suffix ? 'pr-16' : ''}
+                      group-hover:shadow-glow/20
+                    `}
+                    placeholder={field.placeholder}
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                  {field.suffix && (
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none text-sm font-medium">
+                      {field.suffix}
+                    </div>
+                  )}
+                  
+                  {/* Input highlight effect */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-500/10 via-transparent to-secondary-500/10 
+                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Competitor Price ($/mo)
-          </label>
-          <input
-            type="number"
-            name="competitorPrice"
-            value={inputs.competitorPrice}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="79"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Current Customers
-          </label>
-          <input
-            type="number"
-            name="customers"
-            value={inputs.customers}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="250"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Monthly Churn (%)
-          </label>
-          <input
-            type="number"
-            name="churnRate"
-            value={inputs.churnRate}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="5"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            CAC ($)
-          </label>
-          <input
-            type="number"
-            name="cac"
-            value={inputs.cac}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="100"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Avg Contract (months)
-          </label>
-          <input
-            type="number"
-            name="averageContractLength"
-            value={inputs.averageContractLength}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="12"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Expansion Revenue (%)
-          </label>
-          <input
-            type="number"
-            name="expansionRevenue"
-            value={inputs.expansionRevenue}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="10"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Total Market Size ($)
-          </label>
-          <input
-            type="number"
-            name="marketSize"
-            value={inputs.marketSize}
-            onChange={handleInputChange}
-            className="input-futuristic"
-            placeholder="1000000"
-          />
-        </div>
-      </div>
-
-      {/* Calculate Button with Loading State */}
-      <div className="flex justify-center mb-8">
-        <Button
-          onClick={calculateAdvancedMetrics}
-          variant="primary"
-          size="lg"
-          icon={isCalculating ? "⏳" : "🚀"}
-          className="shadow-2xl shadow-primary/30 min-w-[280px]"
-          disabled={isCalculating}
-        >
-          {isCalculating ? (
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-              <span>Analyzing ({calculationProgress}%)</span>
-            </div>
-          ) : (
-            'Generate AI-Powered Analysis'
-          )}
-        </Button>
-      </div>
-      
-      {/* Premium Progress Bar during calculation */}
-      {isCalculating && (
-        <div className="mb-8 max-w-md mx-auto">
-          <div className="bg-glass-primary rounded-full h-3 overflow-hidden backdrop-blur-lg border border-glass-border">
-            <div 
-              className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out relative"
-              style={{ width: `${calculationProgress}%` }}
+          {/* Premium Calculate Button */}
+          <motion.div 
+            className="flex justify-center mb-12"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.2, duration: 0.6, type: 'spring', damping: 20, stiffness: 300 }}
+          >
+            <GradientButton
+              onClick={calculateAdvancedMetrics}
+              variant="primary"
+              size="xl"
+              disabled={isCalculating}
+              glow
+              animate
+              className="min-w-[320px] shadow-glow-lg"
+              icon={isCalculating ? null : "✨"}
             >
-              <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-            </div>
-          </div>
-          <p className="text-center text-sm text-secondary mt-2 font-medium">
-            Running premium algorithms on your data...
-          </p>
-        </div>
-      )}
+              {isCalculating ? (
+                <div className="flex items-center gap-4">
+                  <PremiumLoader size="xs" variant="default" showMessage={false} />
+                  <div className="text-center">
+                    <div className="font-semibold">Analyzing Your Business</div>
+                    <div className="text-sm opacity-80">{calculationProgress}% complete</div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🚀</span>
+                  <div className="text-center">
+                    <div className="font-bold">Generate AI Analysis</div>
+                    <div className="text-sm opacity-90">Powered by WealthFlow Intelligence</div>
+                  </div>
+                </div>
+              )}
+            </GradientButton>
+          </motion.div>
+      
+          {/* Premium Progress Bar during calculation */}
+          <AnimatePresence>
+            {isCalculating && (
+              <motion.div 
+                className="mb-12 max-w-lg mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <GlassCard variant="primary" className="p-6">
+                  <div className="text-center mb-4">
+                    <h3 className="text-lg font-semibold text-white mb-2">WealthFlow AI Processing</h3>
+                    <p className="text-neutral-300 text-sm">Our advanced algorithms are analyzing your business data...</p>
+                  </div>
+                  
+                  <div className="relative">
+                    <div className="bg-glass-surface rounded-full h-4 overflow-hidden backdrop-blur-lg border border-glass-border mb-3">
+                      <motion.div 
+                        className="h-full bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 relative overflow-hidden"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${calculationProgress}%` }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                      >
+                        <div className="absolute inset-0 bg-white/30 animate-shimmer bg-[length:200%_100%]"></div>
+                      </motion.div>
+                    </div>
+                    
+                    <div className="flex justify-between text-xs text-neutral-400">
+                      <span>Processing...</span>
+                      <span className="font-mono font-semibold text-primary-400">{calculationProgress}%</span>
+                    </div>
+                  </div>
+                  
+                  {/* Processing indicators */}
+                  <div className="flex justify-center items-center gap-2 mt-4">
+                    {[...Array(3)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="w-2 h-2 bg-primary-500 rounded-full"
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 1, 0.5]
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                          ease: 'easeInOut'
+                        }}
+                      />
+                    ))}
+                  </div>
+                </GlassCard>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
       {/* Results Section */}
       {results && (
@@ -953,6 +1072,21 @@ export default function Calculator() {
           </div>
         </div>
       )}
-    </motion.div>
+        </GlassCard>
+      </motion.div>
+
+      {/* Success Celebration */}
+      <SuccessCelebration
+        isVisible={showCelebration}
+        title="🎉 Analysis Complete!"
+        message="Your WealthFlow pricing intelligence is ready to boost your revenue!"
+        onComplete={() => setShowCelebration(false)}
+        confettiOptions={{
+          particleCount: 150,
+          spread: 90,
+          colors: ['#10b981', '#1e40af', '#f59e0b', '#34d399', '#60a5fa', '#fbbf24']
+        }}
+      />
+    </>
   );
 }

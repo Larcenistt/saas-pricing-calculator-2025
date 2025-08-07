@@ -36,6 +36,11 @@ model User {
   analyticsEvents   AnalyticsEvent[]
   refreshTokens     RefreshToken[]
   calculationVersions CalculationVersion[]
+  templates         Template[]
+  hostedSessions    CollaborationSession[]
+  collaborationParticipants CollaborationParticipant[]
+  collaborationComments CollaborationComment[]
+  aiUsage           AiUsage[]
 
   @@map("users")
 }
@@ -91,6 +96,9 @@ model Calculation {
   user     User                 @relation(fields: [userId], references: [id])
   team     Team?                @relation(fields: [teamId], references: [id])
   versions CalculationVersion[]
+  aiInsights AiInsight[]
+  collaborationSessions CollaborationSession[]
+  aiUsage    AiUsage[]
 
   @@index([userId])
   @@index([teamId])
@@ -224,4 +232,172 @@ enum SubscriptionStatus {
   PAST_DUE
   TRIALING
   PAUSED
+}
+
+// AI Insights Storage
+model AiInsight {
+  id             String   @id @default(uuid())
+  calculationId  String   @map("calculation_id")
+  insightType    String   @map("insight_type") // "pricing", "competitive", "market", "optimization"
+  prompt         String
+  response       String
+  confidence     Float    @default(0.8)
+  modelVersion   String   @default("gpt-4") @map("model_version")
+  tokensUsed     Int      @map("tokens_used")
+  cost           Decimal  @db.Decimal(10,4)
+  isValid        Boolean  @default(true) @map("is_valid")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  calculation Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+
+  @@index([calculationId])
+  @@index([insightType])
+  @@index([createdAt])
+  @@map("ai_insights")
+}
+
+// Industry Templates and Benchmarks
+model Template {
+  id           String   @id @default(uuid())
+  name         String
+  industry     String
+  description  String?
+  inputs       Json     // Default input values with industry benchmarks
+  benchmarks   Json     // Competitive data and market standards
+  isPublic     Boolean  @default(true) @map("is_public")
+  createdBy    String?  @map("created_by")
+  usageCount   Int      @default(0) @map("usage_count")
+  tags         String[] // For filtering and search
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  creator User? @relation(fields: [createdBy], references: [id])
+
+  @@index([industry])
+  @@index([isPublic])
+  @@map("templates")
+}
+
+// Real-time Collaboration Sessions
+model CollaborationSession {
+  id              String   @id @default(uuid())
+  calculationId   String   @map("calculation_id")
+  hostId          String   @map("host_id")
+  isActive        Boolean  @default(true) @map("is_active")
+  maxParticipants Int      @default(5) @map("max_participants")
+  settings        Json     // Permissions, editing rules, etc.
+  sessionState    Json?    @map("session_state") // Current calculation state
+  createdAt       DateTime @default(now()) @map("created_at")
+  expiresAt       DateTime @map("expires_at")
+
+  // Relations
+  calculation  Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  host         User        @relation(fields: [hostId], references: [id])
+  participants CollaborationParticipant[]
+  comments     CollaborationComment[]
+
+  @@index([calculationId])
+  @@index([isActive])
+  @@map("collaboration_sessions")
+}
+
+// Collaboration Participants
+model CollaborationParticipant {
+  sessionId    String   @map("session_id")
+  userId       String?  @map("user_id")
+  guestName    String?  @map("guest_name")
+  socketId     String   @map("socket_id")
+  permissions  Json     // What actions they can perform
+  cursor       Json?    // Current cursor position for real-time indicators
+  joinedAt     DateTime @default(now()) @map("joined_at")
+  lastActive   DateTime @default(now()) @map("last_active")
+
+  // Relations
+  session CollaborationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user    User?                @relation(fields: [userId], references: [id])
+
+  @@id([sessionId, socketId])
+  @@map("collaboration_participants")
+}
+
+// Collaboration Comments and Annotations
+model CollaborationComment {
+  id        String   @id @default(uuid())
+  sessionId String   @map("session_id")
+  authorId  String?  @map("author_id")
+  content   String
+  position  Json?    // UI position/context for the comment
+  isResolved Boolean @default(false) @map("is_resolved")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  session CollaborationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  author  User?                @relation(fields: [authorId], references: [id])
+
+  @@index([sessionId])
+  @@map("collaboration_comments")
+}
+
+// Cache Management for Performance
+model CacheEntry {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String   // JSON serialized data
+  tags      String[] // For organized invalidation
+  expiresAt DateTime @map("expires_at")
+  hitCount  Int      @default(0) @map("hit_count")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([key])
+  @@index([expiresAt])
+  @@index([tags])
+  @@map("cache_entries")
+}
+
+// Background Job Queue
+model BackgroundJob {
+  id          String    @id @default(uuid())
+  type        String    // "ai_analysis", "report_generation", "email_notification"
+  payload     Json
+  status      String    @default("pending") // "pending", "processing", "completed", "failed"
+  progress    Int       @default(0) // 0-100%
+  result      Json?
+  error       String?
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3) @map("max_attempts")
+  priority    Int       @default(5) // 1 (high) to 10 (low)
+  scheduledAt DateTime  @default(now()) @map("scheduled_at")
+  startedAt   DateTime? @map("started_at")
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([type])
+  @@index([status])
+  @@index([priority])
+  @@index([scheduledAt])
+  @@map("background_jobs")
+}
+
+// AI Usage Tracking for Cost Management
+model AiUsage {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  calculationId String?  @map("calculation_id")
+  requestType   String   @map("request_type") // "insight", "analysis", "recommendation"
+  tokensUsed    Int      @map("tokens_used")
+  cost          Decimal  @db.Decimal(10,6)
+  model         String   @default("gpt-4")
+  responseTime  Int      @map("response_time") // milliseconds
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user        User         @relation(fields: [userId], references: [id])
+  calculation Calculation? @relation(fields: [calculationId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("ai_usage")
 }

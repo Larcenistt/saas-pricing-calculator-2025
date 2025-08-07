@@ -1,7 +1,19 @@
 import { useState } from 'react';
 import BuyButtonWrapper from '../components/BuyButtonWrapper';
+import TieredPricingPremium from '../components/TieredPricingPremium';
+import CompetitorComparisonPremium from '../components/CompetitorComparisonPremium';
 
 export default function PricingPage() {
+  return (
+    <div>
+      <TieredPricingPremium />
+      <CompetitorComparisonPremium />
+    </div>
+  );
+}
+
+// Legacy pricing page preserved below for reference
+export function PricingPageLegacy() {
   const [billingPeriod, setBillingPeriod] = useState('lifetime');
 
   const plans = [

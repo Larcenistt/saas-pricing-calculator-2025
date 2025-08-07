@@ -4,7 +4,7 @@ import MarketPositioning from '../components/MarketPositioning';
 import FeaturesSection from '../components/FeaturesSection-Modern';
 import TestimonialsSection from '../components/TestimonialsSection-Modern';
 import TestimonialsQuick from '../components/TestimonialsQuick';
-import TieredPricing from '../components/TieredPricing';
+import TieredPricingPremium from '../components/TieredPricingPremium';
 import Footer from '../components/Footer-Modern';
 
 export default function HomePage() {
@@ -38,7 +38,7 @@ export default function HomePage() {
       <FeaturesSection />
       <TestimonialsQuick />
       <TestimonialsSection />
-      <TieredPricing />
+      <TieredPricingPremium />
       <Footer />
     </div>
   );
